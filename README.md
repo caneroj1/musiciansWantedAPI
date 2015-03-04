@@ -1,7 +1,8 @@
 # musiciansWantedAPI
 
+RESTful API for our iOS app. This will manage all AWS and SoundCloud services.
 
-* Ruby version
+* Ruby version: 2.1.5
 
 * System dependencies
 
@@ -16,4 +17,3 @@
 * Services (job queues, cache servers, search engines, etc.)
 
 * Deployment instructions
-
