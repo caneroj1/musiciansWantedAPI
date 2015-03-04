@@ -1,7 +1,5 @@
 # musiciansWantedAPI
 
-<hr>
-<br>
 
 * Ruby version
 
