@@ -54,15 +54,5 @@ Rails.application.routes.draw do
   #     resources :products
   #   end
 
-  resources :users 
+  resources :users, defaults: { format: :json }
 end
-
-
-
-
-
-
-
-
-
-
