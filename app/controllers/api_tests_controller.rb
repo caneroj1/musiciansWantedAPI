@@ -1,2 +1,0 @@
-class ApiTestsController < ApplicationController
-end
