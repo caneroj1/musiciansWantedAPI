@@ -23,8 +23,13 @@ gem 'jbuilder', '~> 2.0'
 # bundle exec rake doc:rails generates the API under doc/api.
 gem 'sdoc', '~> 0.4.0', group: :doc
 
+# will dot env file for environemnt instead of code
+gem 'dotenv-rails', :groups => [:development, :test]
+
+# to see errors 
 gem 'better_errors'
 
+# accessible by protected, making it instance variable
 gem 'protected_attributes'
 
 # Use ActiveModel has_secure_password
