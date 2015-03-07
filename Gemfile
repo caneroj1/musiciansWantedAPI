@@ -29,6 +29,9 @@ gem 'dotenv-rails', :groups => [:development, :test]
 # to see errors
 gem 'better_errors'
 
+#AWS sdk
+gem 'aws-sdk'
+
 # accessible by protected, making it instance variable
 gem 'protected_attributes'
 
