@@ -1,3 +1,0 @@
-class SesEmailsController < ApplicationController
-  
-end
