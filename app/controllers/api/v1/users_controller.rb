@@ -2,10 +2,10 @@ class Api::V1::UsersController < ApplicationController
 	## GET
 	# returns all users in json format.
 	def index
-		@user_info = User.all
+		user_info = User.all
 
 		respond_to do |format|
-		   format.json  { render :json => @user_info}
+	  	format.json  { render :json => user_info}
 		end
 	end
 
@@ -28,11 +28,23 @@ class Api::V1::UsersController < ApplicationController
 	## POST
 	# accepts a hash of user attributes in order to create and save a new user.
 	def create
-		@new_user = User.new(params[:user])
-		if @new_user.save
-			render json: @new_user, status: 201, location: [:api, @new_user]
+		new_user = User.new(params[:user])
+		if new_user.save
+			render json: new_user, status: 201, location: [:api, new_user]
 		else
-			render json: { errors: @new_user.errors }, status: 422
+			render json: { errors: new_user.errors }, status: 422
+		end
+	end
+
+	## PUT/PATCH
+	# accepts a hash of user attributes that will be used to update the user's information
+	def update
+		update_user = User.find(params[:id])
+
+		if update_user.update(params[:user])
+			render json: update_user, status: 200, location: [:api, update_user]
+		else
+			render json: { errors: update_user.errors }, status: 422
 		end
 	end
 end
