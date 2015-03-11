@@ -1,6 +1,6 @@
 class ApplicationController < ActionController::Base
-  # restrict access to the api
-  before_action :whitelist
+  # restrict access to the api if we are not in development mode
+  before_action :whitelist, if: :not_development?
 
   private
   # this method is called before every request coming in to the API
@@ -17,5 +17,11 @@ class ApplicationController < ActionController::Base
   def cannot_access_api?
     !request.env["REQUEST_METHOD"].eql?("GET") &&
     !request.headers['mw-token'].eql?(ENV["api_access_token"])
+  end
+
+  # if the rails app is in development mode, we do not want to have all of our requests contain the api token
+  # that would be annoying and break forms and stuff.
+  def not_development?
+    !Rails.env.eql?("development")
   end
 end
