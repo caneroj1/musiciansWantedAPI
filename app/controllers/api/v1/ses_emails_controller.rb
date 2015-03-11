@@ -21,5 +21,7 @@ class Api::V1::SesEmailsController < ApplicationController
 
       @sesClient.verify_email_address(email_address: email)
 
+      @resp = "Verification Email Sent"
+
   end
 end
