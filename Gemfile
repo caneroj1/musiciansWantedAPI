@@ -35,6 +35,9 @@ gem 'aws-sdk'
 # accessible by protected, making it instance variable
 gem 'protected_attributes'
 
+# soundcloud api for ruby
+gem 'soundcloud'
+
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 

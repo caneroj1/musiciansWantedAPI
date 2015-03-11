@@ -17,7 +17,7 @@ class Api::V1::SesEmailsController < ApplicationController
       #   @resp = response.data
       # end
 
-      email = ''
+      email = 'testCSC470@mailinator.com'
 
       @sesClient.verify_email_address(email_address: email)
 
