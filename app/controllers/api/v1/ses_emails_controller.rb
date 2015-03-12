@@ -1,6 +1,9 @@
 class Api::V1::SesEmailsController < ApplicationController
-  before_action :loadClient
-  def loadClient()
+  # Used to run loadClient before anything else is run
+  before_action :loadSESClient
+
+  # Load AWS SES Client
+  def loadSESClient()
     @sesClient = Aws::SES::Client.new(access_key_id: ENV['aws_access_key_id'],secret_access_key: ENV['aws_secret_access_key'],region: 'us-east-1')
 
   end
