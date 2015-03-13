@@ -39,14 +39,14 @@ set :deploy_to, path_to_app
 desc "Update the gems. Runs bundle:update"
 task :bundle do
   on roles(:app) do
-    execute "cd #{path_to_app}; bundle update;"
+    execute "cd #{path_to_app}/current; bundle update;"
   end
 end
 
 desc "Move environment file to the app directory."
 task :move_files do
   on roles(:app) do
-    execute "cp .env #{path_to_app}/;"
+    execute "cp .env #{path_to_app}/current;"
   end
 end
 
@@ -86,7 +86,7 @@ namespace :deploy do
   task :migrations do
     on roles(:web) do
       Capistrano::Application.invoke("deploy")
-      execute "cd #{path_to_app}; rake db:migrate;"
+      execute "cd #{path_to_app}/current; rake db:migrate;"
     end
   end
 
