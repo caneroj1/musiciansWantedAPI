@@ -24,7 +24,7 @@ gem 'jbuilder', '~> 2.0'
 gem 'sdoc', '~> 0.4.0', group: :doc
 
 # will dot env file for environemnt instead of code
-gem 'dotenv-rails', :groups => [:development, :test]
+gem 'dotenv-rails'
 
 # to see errors
 gem 'better_errors'
@@ -34,6 +34,12 @@ gem 'protected_attributes'
 
 # soundcloud api for ruby
 gem 'soundcloud'
+
+# postgres for db
+gem 'pg'
+
+# capistrano for deploying to our Linode server
+gem 'capistrano', '~> 3.3.0'
 
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
