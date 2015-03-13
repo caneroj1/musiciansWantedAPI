@@ -23,8 +23,6 @@ gem 'jbuilder', '~> 2.0'
 # bundle exec rake doc:rails generates the API under doc/api.
 gem 'sdoc', '~> 0.4.0', group: :doc
 
-# dot env file for environemnt instead of code
-gem 'dotenv-rails', :groups => [:development, :test]
 
 # to see errors
 gem 'better_errors'
@@ -37,6 +35,12 @@ gem 'protected_attributes'
 
 # soundcloud api for ruby
 gem 'soundcloud'
+
+# postgres for db
+gem 'pg', group: :production
+
+# capistrano for deploying to our Linode server
+gem 'capistrano-rails', group: :development
 
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
