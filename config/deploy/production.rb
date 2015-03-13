@@ -25,20 +25,20 @@ role :web, %w{root@45.56.101.202}
 #
 # Global options
 # --------------
-#  set :ssh_options, {
-#    keys: %w(/home/rlisowski/.ssh/id_rsa),
-#    forward_agent: false,
-#    auth_methods: %w(password)
-#  }
+# set :ssh_options, {
+#   keys: %w(/Users/joecanero/.ssh/github_rsa),
+#   forward_agent: false,
+#   auth_methods: %w(password)
+# }
 #
 # And/or per server (overrides global)
 # ------------------------------------
-# server 'example.com',
-#   user: 'user_name',
-#   roles: %w{web app},
+# server '45.56.101.202',
+#   user: 'root',
+#   roles: %w{web},
 #   ssh_options: {
-#     user: 'user_name', # overrides user setting above
-#     keys: %w(/home/user_name/.ssh/id_rsa),
+#     user: 'root', # overrides user setting above
+#     keys: %w(/Users/joecanero/.ssh/mw_rsa.pub),
 #     forward_agent: false,
 #     auth_methods: %w(publickey password)
 #     # password: 'please use keys'

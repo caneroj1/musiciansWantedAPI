@@ -4,7 +4,7 @@ path_to_app = "/home/app/musiciansWantedAPI"
 lock '3.4.0'
 
 set :application, 'musiciansWantedAPI'
-set :repo_url, 'https://github.com/caneroj1/musiciansWantedAPI.git'
+set :repo_url, 'git@github.com:caneroj1/musiciansWantedAPI.git'
 
 # Default branch is :master
 # ask :branch, proc { `git rev-parse --abbrev-ref HEAD`.chomp }.call
