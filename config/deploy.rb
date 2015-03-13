@@ -38,23 +38,22 @@ set :deploy_to, path_to_app
 
 desc "Update the gems. Runs bundle:update"
 task :bundle do
-  on roles(:app) do
+  on roles(:web) do
     execute "cd #{path_to_app}/current; bundle update;"
   end
 end
 
 desc "Move environment file to the app directory."
-task :move_files do
-  on roles(:app) do
-    execute "cp .env #{path_to_app}/current;"
+task :set_env do
+  on roles(:web) do
+    execute "cp ~/.env #{path_to_app}/current;"
   end
 end
 
 after("deploy", "bundle")
-after("deploy", "move_files")
+after("deploy", "set_env")
 
 namespace :deploy do
-
   after :restart, :clear_cache do
     on roles(:web), in: :groups, limit: 3, wait: 10 do
       # Here we can do anything such as:
