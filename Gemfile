@@ -36,10 +36,10 @@ gem 'protected_attributes'
 gem 'soundcloud'
 
 # postgres for db
-gem 'pg'
+gem 'pg', group: :production
 
 # capistrano for deploying to our Linode server
-gem 'capistrano', '~> 3.3.0'
+gem 'capistrano-rails', group: :development
 
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
