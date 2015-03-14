@@ -47,4 +47,11 @@ RSpec.configure do |config|
   # The different available types are documented in the features, such as in
   # https://relishapp.com/rspec/rspec-rails/docs
   config.infer_spec_type_from_file_location!
+
+  config.include Request::JsonHelpers, type: :controller
+  config.include Request::HeaderHelpers, type: :controller
+
+  config.before(:each, type: :controller) do
+    include_default_accept_headers
+  end
 end
