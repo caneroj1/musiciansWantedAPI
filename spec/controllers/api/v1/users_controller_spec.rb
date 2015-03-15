@@ -21,7 +21,6 @@ RSpec.describe Api::V1::UsersController do
     context "when successfully created" do
       before(:each) do
         @user_attributes = FactoryGirl.attributes_for :user
-        puts @user_attributes.inspect
         post :create, { user: @user_attributes }, format: :json
       end
 

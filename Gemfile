@@ -35,6 +35,9 @@ gem 'protected_attributes'
 # soundcloud api for ruby
 gem 'soundcloud'
 
+# for location services
+gem 'geocoder'
+
 # postgres for db
 gem 'pg', group: :production
 
