@@ -7,6 +7,10 @@ class User < ActiveRecord::Base
 	# perform custom validation on the age
 	validate :validate_age_on_create_or_update
 
+	# a user can have many events and they can also belong to many events
+	has_and_belongs_to_many :events
+
+
 	# a user's age must be an integer >= 1 or it can be nil if the user does not
 	# want to disclose their age.
 	def validate_age_on_create_or_update
