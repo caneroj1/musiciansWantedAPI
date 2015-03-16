@@ -50,4 +50,8 @@ RSpec.describe User do
       expect(FactoryGirl.build(:user).location).to_not be_blank
     end
   end
+
+  context 'associations' do
+    it { should have_and_belong_to_many :events }
+  end
 end

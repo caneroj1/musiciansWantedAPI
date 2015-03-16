@@ -66,11 +66,16 @@ group :development, :test do
 
   # for testing associations
   gem 'shoulda'
-end
 
-# testing suite
-group :test do
+  # testing suite
   gem "rspec-rails"
   gem "factory_girl_rails"
   gem 'ffaker'
 end
+
+# testing suite
+# group :development, :test do
+#   gem "rspec-rails"
+#   gem "factory_girl_rails"
+#   gem 'fFFaker'
+# end

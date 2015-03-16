@@ -1,6 +1,21 @@
 require 'rails_helper'
 
 RSpec.describe Api::V1::UsersController do
+  describe 'GET #index' do
+    before(:each) do
+      get :index, format: :json
+    end
+
+    it 'returns all of the users' do
+      user_response = json_response
+      expect(user_response.count).to eq(User.count)
+    end
+
+    it 'should return 200 on a valid request' do
+      expect(response.status).to eq(200)
+    end
+  end
+
   describe 'GET #show' do
     before(:each) do
       @user = FactoryGirl.create :user

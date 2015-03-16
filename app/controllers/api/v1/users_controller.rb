@@ -2,10 +2,8 @@ class Api::V1::UsersController < ApplicationController
 	## GET
 	# returns all users in json format.
 	def index
-		user_info = User.all
-
 		respond_to do |format|
-	  	format.json  { render :json => user_info}
+	  	format.json  { render json: User.all }
 		end
 	end
 

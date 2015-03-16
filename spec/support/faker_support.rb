@@ -3,11 +3,11 @@ require 'ffaker'
 class FakerSupport
   class << self
     def location
-      "#{Faker::AddressUS.street_address}, #{Faker::AddressUS.city}, #{Faker::AddressUS.state} #{Faker::AddressUS.zip_code}"
+      "#{FFaker::AddressUS.street_address}, #{FFaker::AddressUS.city}, #{FFaker::AddressUS.state} #{FFaker::AddressUS.zip_code}"
     end
 
     def event_name
-      "#{adjective} #{Faker::Color.name.capitalize} #{event_type}"
+      "#{adjective} #{FFaker::Color.name.capitalize} #{event_type}"
     end
 
     private
