@@ -6,7 +6,7 @@ Rails.application.routes.draw do
   namespace :api, defaults: { format: :json } do
     scope module: :v1, constraints: ApiConstraints.new(version: 1, default: true) do
       resources :users, defaults: { format: :json }
-      get 'test', to: 'ses_emails#test', defaults: { format: :html }
+      get 'sendEmail', to: 'ses_emails#sendEmail', defaults: { format: :html }
     end
   end
 end
