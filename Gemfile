@@ -23,12 +23,11 @@ gem 'jbuilder', '~> 2.0'
 # bundle exec rake doc:rails generates the API under doc/api.
 gem 'sdoc', '~> 0.4.0', group: :doc
 
+# will dot env file for environemnt instead of code
+gem 'dotenv-rails'
 
 # to see errors
 gem 'better_errors'
-
-#AWS sdk
-gem 'aws-sdk'
 
 # accessible by protected, making it instance variable
 gem 'protected_attributes'
