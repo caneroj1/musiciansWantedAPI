@@ -26,6 +26,9 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 # will dot env file for environemnt instead of code
 gem 'dotenv-rails'
 
+#AWS sdk
+gem 'aws-sdk'
+
 # to see errors
 gem 'better_errors'
 
