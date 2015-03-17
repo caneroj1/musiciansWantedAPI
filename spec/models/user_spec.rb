@@ -26,8 +26,26 @@ RSpec.describe User do
       expect(FactoryGirl.build(:user, email: nil)).to_not be_valid
     end
 
-    it 'validates email correctly' do
-      expect(FactoryGirl.build(:user, email: "email.com")).to_not be_valid
+    context 'email validation' do
+      it 'needs an @' do
+        expect(FactoryGirl.build(:user, email: "email.com")).to_not be_valid
+      end
+
+      it 'cannot start with an @' do
+        expect(FactoryGirl.build(:user, email: "@email@mail.com")).to_not be_valid
+      end
+
+      it 'cannot start a space' do
+        expect(FactoryGirl.build(:user, email: " email@mail.com")).to_not be_valid
+      end
+
+      it 'cannot have a single-letter top-level domain' do
+        expect(FactoryGirl.build(:user, email: "email@mail.c")).to_not be_valid
+      end
+
+      it 'approves well-formed emails' do
+        expect(FactoryGirl.build(:user, email: "my.email@mail.com")).to be_valid
+      end
     end
 
     it 'has an age' do

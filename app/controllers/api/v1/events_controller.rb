@@ -16,4 +16,14 @@ class Api::V1::EventsController < ApplicationController
     end
   end
 
+  ## POST
+  # creates an event according to params that are passed in
+  def create
+    new_event = Event.new(params[:event])
+    if new_event.save
+      render json: Event.create(params[:event]), status: 201, location: [:api, new_event]
+    else
+      render json: { errors: new_event.errors }, status: 422
+    end
+  end
 end
