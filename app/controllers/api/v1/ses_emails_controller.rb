@@ -14,13 +14,20 @@ class Api::V1::SesEmailsController < ApplicationController
 
   def sendEmail()
 
+    sendTo = ""
+
+    if params[:email].nil? == false
+      sendTo = params[:email]
+
+    end
+
     #Used to send email
     @resp = @sesClient.send_email(
     # required
     source: "caneroj1@tcnj.edu",
     # required
     destination: {
-      to_addresses: ["testcsc470@mailinator.com"]
+      to_addresses: [sendTo]
     },
     # required
     message: {
