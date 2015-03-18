@@ -7,8 +7,7 @@ RSpec.describe Api::V1::UsersController do
     end
 
     it 'returns all of the users' do
-      user_response = json_response
-      expect(user_response.count).to eq(User.count)
+      expect(json_response.count).to eq(User.count)
     end
 
     it 'should return 200 on a valid request' do
@@ -23,8 +22,7 @@ RSpec.describe Api::V1::UsersController do
     end
 
     it 'returns the information in a hash' do
-      user_response = json_response
-      expect(user_response[:name]).to eq(@user.name)
+      expect(json_response[:name]).to eq(@user.name)
     end
 
     it 'should return 200 on a valid request' do
@@ -40,8 +38,7 @@ RSpec.describe Api::V1::UsersController do
       end
 
       it 'renders json for the record that was just created' do
-        user_response = json_response
-        expect(user_response[:name]).to eq(@user_attributes[:name])
+        expect(json_response[:name]).to eq(@user_attributes[:name])
       end
 
       it 'should respond with 201 for a successful create' do
@@ -78,8 +75,7 @@ RSpec.describe Api::V1::UsersController do
       end
 
       it 'renders the json representation for a successfully updated user' do
-        user_attributes = json_response
-        expect(user_attributes[:name]).to eq("New Name")
+        expect(json_response[:name]).to eq("New Name")
       end
 
       it 'should respond with 200' do
@@ -95,16 +91,66 @@ RSpec.describe Api::V1::UsersController do
 
       it 'renders an errors json' do
         user_attributes = json_response
-        expect(user_attributes).to have_key(:errors)
+        expect(json_response).to have_key(:errors)
       end
 
       it 'renders the json errors on why the user could not be created' do
-        user_attributes = json_response
-        expect(user_attributes[:errors][:name]).to include("can't be blank")
+        expect(json_response[:errors][:name]).to include("can't be blank")
       end
 
       it 'should respond with 422' do
         expect(response.status).to eq(422)
+      end
+    end
+
+    context "when it cannot find the user" do
+      it 'has errors' do
+        patch :update, { id: -1 }
+        expect(json_response).to have_key(:errors)
+      end
+    end
+  end
+
+  describe 'DELETE #destroy' do
+    context 'on successful destroy' do
+      before(:each) do
+        @user = FactoryGirl.create(:user)
+        delete :destroy, { id: @user.id }, format: :json
+      end
+
+      it 'should delete the user' do
+        expect(User.find_by_id(@user.id)).to eq(nil)
+      end
+
+      it 'should return a string indicating delete worked' do
+        expect(json_response[:info]).to eq("delete successful")
+      end
+
+      it 'should respond with 200' do
+        expect(response.status).to eq(200)
+      end
+    end
+
+    context 'on unsuccessful destroy' do
+      before(:each) do
+        @user_count = User.count
+        delete :destroy, { id: -1 }, format: :json
+      end
+
+      it 'should not delete a user' do
+        expect(User.count).to eq(@user_count)
+      end
+
+      it 'should respond with 422' do
+        expect(response.status).to eq(422)
+      end
+
+      it 'should have an errors key indicating what went wrong' do
+        expect(json_response).to have_key(:errors)
+      end
+
+      it 'should render the errors' do
+        expect(json_response[:errors]).to include("unsuccessful")
       end
     end
   end

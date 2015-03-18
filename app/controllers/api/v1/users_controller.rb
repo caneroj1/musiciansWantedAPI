@@ -37,12 +37,25 @@ class Api::V1::UsersController < ApplicationController
 	## PUT/PATCH
 	# accepts a hash of user attributes that will be used to update the user's information
 	def update
-		update_user = User.find(params[:id])
+		update_user = User.find_by_id(params[:id])
 
-		if update_user.update(params[:user])
+		if !update_user.nil? && update_user.update(params[:user])
 			render json: update_user, status: 200, location: [:api, update_user]
 		else
-			render json: { errors: update_user.errors }, status: 422
+			errors = !update_user.nil? ? update_user.errors : "update unsuccessful"
+			render json: { errors: errors }, status: 422
+		end
+	end
+
+	## DELETE
+	# destroys the specified user according to the passed in params
+	def destroy
+		delete_user = User.find_by_id(params[:id])
+
+		if !delete_user.nil? && delete_user.delete
+			render json: { info: "delete successful" }, status: 200, location: [:api, delete_user]
+		else
+			render json: { errors: "delete unsuccessful" }, status: 422
 		end
 	end
 end
