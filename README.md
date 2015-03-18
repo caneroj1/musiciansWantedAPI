@@ -1,6 +1,6 @@
 # musiciansWantedAPI
 
-[![Build Status](https://magnum.travis-ci.com/caneroj1/musiciansWantedAPI.svg?token=83qB3HErKSprzMzSMRAs&branch=soundcloudOauth)](https://magnum.travis-ci.com/caneroj1/musiciansWantedAPI)
+[![Build Status](https://magnum.travis-ci.com/caneroj1/musiciansWantedAPI.svg?token=83qB3HErKSprzMzSMRAs&branch=master)](https://magnum.travis-ci.com/caneroj1/musiciansWantedAPI)
 
 RESTful API for our iOS app. This will manage all AWS and SoundCloud services.
 

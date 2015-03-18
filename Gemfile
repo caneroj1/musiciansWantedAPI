@@ -30,6 +30,9 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 # will dot env file for environemnt instead of code
 gem 'dotenv-rails'
 
+#AWS sdk
+gem 'aws-sdk'
+
 # accessible by protected, making it instance variable
 gem 'protected_attributes'
 
@@ -72,10 +75,3 @@ group :development, :test do
   gem "factory_girl_rails"
   gem 'ffaker'
 end
-
-# testing suite
-# group :development, :test do
-#   gem "rspec-rails"
-#   gem "factory_girl_rails"
-#   gem 'fFFaker'
-# end
