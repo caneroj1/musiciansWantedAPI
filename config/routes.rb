@@ -8,6 +8,7 @@ Rails.application.routes.draw do
       resources :users, defaults: { format: :json }
       resources :events, defaults: { format: :json }
       get 'sendEmail', to: 'ses_emails#sendEmail', defaults: { format: :html }
+      get 's3upload', to: 's3_storages#s3upload', defaults: { format: :html }
     end
   end
 end

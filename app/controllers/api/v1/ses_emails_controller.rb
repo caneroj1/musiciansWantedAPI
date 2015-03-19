@@ -4,17 +4,14 @@ class Api::V1::SesEmailsController < ApplicationController
 
   # Load AWS SES Client
   def loadSESClient
-    @sesClient = Aws::SES::Client.new(access_key_id: ENV['j_aws_access_key_id'], secret_access_key: ENV['j_aws_secret_access_key'], region: 'us-west-2')
-
-    # Region is virginia, not approved for production access yet
-    # @sesClient = Aws::SES::Client.new(access_key_id: ENV['j_aws_access_key_id'], secret_access_key: ENV['j_aws_secret_access_key'], region: 'us-east-1')
+    @sesClient = Aws::SES::Client.new(access_key_id: ENV['h_aws_access_key_id'], secret_access_key: ENV['h_aws_secret_access_key'], region: 'us-east-1')
 
 
   end
 
   def sendEmail()
 
-    sendTo = ""
+    sendTo = "harveyh1@tcnj.edu"
 
     if params[:email].nil? == false
       sendTo = params[:email]
@@ -24,7 +21,7 @@ class Api::V1::SesEmailsController < ApplicationController
     #Used to send email
     @resp = @sesClient.send_email(
     # required
-    source: "caneroj1@tcnj.edu",
+    source: "harveyh1@tcnj.edu",
     # required
     destination: {
       to_addresses: [sendTo]
@@ -51,8 +48,8 @@ class Api::V1::SesEmailsController < ApplicationController
         },
       },
     },
-    reply_to_addresses: ["caneroj1@tcnj.edu"],
-    return_path: "caneroj1@tcnj.edu",
+    reply_to_addresses: ["harveyh1@tcnj.edu"],
+    return_path: "harveyh1@tcnj.edu",
   )
 
   #Used to get send quote
