@@ -10,6 +10,8 @@ class Api::V1::S3StoragesController < ApplicationController
 
   def s3upload()
 
+    #Notes: use paperclip to deal with image upload through s3
+
     @resp = @s3Client.put_object(
       acl: "bucket-owner-full-control",
       body: "this is a test",
