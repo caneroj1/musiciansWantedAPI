@@ -51,4 +51,43 @@ class Api::V1::EventsController < ApplicationController
       render json: { errors: "delete unsuccessful" }, status: 422
     end
   end
+
+  ## GET
+  # get the user that created the specified event
+  def get_event_creator
+    event = Event.find_by_id(params[:id])
+
+    if !event.nil?
+      render json: User.find_by_id(event.created_by), status: 200, location: [:api, event]
+    else
+      render json: { errors: "unsuccessful query to get event creator" }, status: 422
+    end
+  end
+
+  ## GET
+  # get the list of users that are attending the specified event.
+  # this includes the user who created the event.
+  def get_event_attendees
+    event = Event.find_by_id(params[:id])
+
+    if !event.nil?
+      render json: event.users, status: 200, location: [:api, event]
+    else
+      render json: { errors: "unsuccessful query to get event attendees" }, status: 422
+    end
+  end
+
+  ## POST
+  # this will add the specified user to the indicated event
+  def attend_event
+    event = Event.find_by_id(params[:id])
+    user = User.find_by_id(params[:user_id])
+
+    if !event.nil? && !user.nil? && !event.users.include?(user)
+      event.users << user
+      render json: "", status: 204, location: [:api, event]
+    else
+      render json: { errors: "there was a problem with the user attending that event" }, status: 422
+    end
+  end
 end
