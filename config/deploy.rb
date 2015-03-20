@@ -7,6 +7,7 @@ set :application, 'musiciansWantedAPI'
 set :repo_url, 'git@github.com:caneroj1/musiciansWantedAPI.git'
 
 # Default branch is :master
+set :branch, :rds
 # ask :branch, proc { `git rev-parse --abbrev-ref HEAD`.chomp }.call
 
 # Default deploy_to directory is /var/www/my_app_name

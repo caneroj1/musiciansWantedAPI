@@ -24,6 +24,7 @@ production:
   adapter:  postgresql
   pool:     5
   timeout:  5000
-  username: root
-  password: <%= ENV["db_password"] %>
-  database: musicians_wanted_production
+  username: <%= ENV["rds_username"] %>
+  password: <%= ENV["rds_password"] %>
+  host:     <%= ENV["rds_hostname"] %>
+  database: mwdb
