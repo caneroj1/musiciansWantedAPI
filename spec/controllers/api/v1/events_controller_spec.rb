@@ -52,11 +52,16 @@ RSpec.describe Api::V1::EventsController, type: :controller do
       it 'should create an event that belongs to the correct user' do
         expect(@event_response[:created_by]).to eq(@user.id)
       end
+
+      it 'should add the creator to the list of attendees' do
+        expect(Event.find_by_id(@event_response[:id]).users).to include(@user)
+      end
     end
 
     context 'when is not created' do
       before(:each) do
-        @event_attributes = { }
+        @user = FactoryGirl.create(:user)
+        @event_attributes = { created_by: @user.id }
         post :create, { event: @event_attributes }, format: :json
         @event_response = json_response
       end
@@ -67,6 +72,26 @@ RSpec.describe Api::V1::EventsController, type: :controller do
 
       it 'renders the errors json on why the creation failed' do
         expect(@event_response[:errors][:title]).to include("can't be blank")
+      end
+
+      it 'should respond with 422 error code' do
+        expect(response.status).to eq(422)
+      end
+    end
+
+    context 'when user does not exist' do
+      before(:each) do
+        @event_attributes = FactoryGirl.attributes_for :event, created_by: -1
+        post :create, { event: @event_attributes }, format: :json
+        @event_response = json_response
+      end
+
+      it 'renders an errors json' do
+        expect(@event_response).to have_key(:errors)
+      end
+
+      it 'renders the errors json on why the creation failed' do
+        expect(@event_response[:errors]).to include("problem")
       end
 
       it 'should respond with 422 error code' do
