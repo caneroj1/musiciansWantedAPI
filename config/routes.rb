@@ -5,7 +5,11 @@ Rails.application.routes.draw do
 
   namespace :api, defaults: { format: :json } do
     scope module: :v1, constraints: ApiConstraints.new(version: 1, default: true) do
-      resources :users, defaults: { format: :json }
+      resources :users, defaults: { format: :json } do
+        member do
+          get 'events', to: 'users#get_events'
+        end
+      end
 
       resources :events, defaults: { format: :json } do
         member do

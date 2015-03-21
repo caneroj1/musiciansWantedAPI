@@ -58,4 +58,17 @@ class Api::V1::UsersController < ApplicationController
 			render json: { errors: "delete unsuccessful" }, status: 422
 		end
 	end
+
+	## GET
+	# gets the list of this user's events
+	def get_events
+		user = User.find_by_id(params[:id])
+
+		if !user.nil?
+			render json: user.events, status: 200, location: [:api, user]
+		else
+			render json: { errors: "there was a problem getting the events for that user" }, status: 422
+		end
+	end
+
 end
