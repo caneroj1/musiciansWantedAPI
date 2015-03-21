@@ -48,7 +48,7 @@ class Api::V1::S3StoragesController < ApplicationController
     end
 
 
-    #Used to get send quote
+    #Used to return response
     @resp.each do |response|
       @resp = response.data
     end
