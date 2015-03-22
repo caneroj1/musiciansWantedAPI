@@ -154,4 +154,48 @@ RSpec.describe Api::V1::UsersController do
       end
     end
   end
+
+  describe 'GET #get_events' do
+    context 'user exists' do
+      before(:each) do
+        @user = FactoryGirl.create(:user_with_events)
+        @event_count = @user.events.count
+        get :get_events, { id: @user.id }, format: :json
+      end
+
+      it 'should return all of the user\'s events' do
+        user_response = json_response
+        expect(user_response.count).to eq(@event_count)
+      end
+
+      it 'should return them in json hash format' do
+        user_response = json_response
+        expect(user_response[0][:title]).to_not be_blank
+      end
+
+      it 'should respond with 200' do
+        expect(response.status).to eq(200)
+      end
+    end
+
+    context 'user does not exist' do
+      before(:each) do
+        get :get_events, { id: -1 }, format: :json
+      end
+
+      it 'should return an errors json indicating there was a problem' do
+        user_response = json_response
+        expect(user_response).to have_key(:errors)
+      end
+
+      it 'should say that there was a problem' do
+        user_response = json_response
+        expect(user_response[:errors]).to include("problem")
+      end
+
+      it 'should respond with 422' do
+        expect(response.status).to eq(422)
+      end
+    end
+  end
 end

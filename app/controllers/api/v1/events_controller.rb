@@ -18,12 +18,18 @@ class Api::V1::EventsController < ApplicationController
 
   ## POST
   # creates an event according to params that are passed in
+  # adds the creator of the event to the list of attendees
   def create
     new_event = Event.new(params[:event])
-    if new_event.save
-      render json: Event.create(params[:event]), status: 201, location: [:api, new_event]
+    user = User.find_by_id(new_event.created_by)
+
+    if !user.nil? && new_event.valid?
+      new_event.users << user
+      new_event.save
+      render json: new_event, status: 201, location: [:api, new_event]
     else
-      render json: { errors: new_event.errors }, status: 422
+      errors = user.nil? ? "there was a problem creating this event" : new_event.errors
+      render json: { errors: errors }, status: 422
     end
   end
 
@@ -49,6 +55,45 @@ class Api::V1::EventsController < ApplicationController
       render json: { info: "delete successful" }, status: 200, location: [:api, delete_event]
     else
       render json: { errors: "delete unsuccessful" }, status: 422
+    end
+  end
+
+  ## GET
+  # get the user that created the specified event
+  def get_event_creator
+    event = Event.find_by_id(params[:id])
+
+    if !event.nil?
+      render json: User.find_by_id(event.created_by), status: 200, location: [:api, event]
+    else
+      render json: { errors: "unsuccessful query to get event creator" }, status: 422
+    end
+  end
+
+  ## GET
+  # get the list of users that are attending the specified event.
+  # this includes the user who created the event.
+  def get_event_attendees
+    event = Event.find_by_id(params[:id])
+
+    if !event.nil?
+      render json: event.users, status: 200, location: [:api, event]
+    else
+      render json: { errors: "unsuccessful query to get event attendees" }, status: 422
+    end
+  end
+
+  ## POST
+  # this will add the specified user to the indicated event
+  def attend_event
+    event = Event.find_by_id(params[:id])
+    user = User.find_by_id(params[:user_id])
+
+    if !event.nil? && !user.nil? && !event.users.include?(user)
+      event.users << user
+      render json: "", status: 204, location: [:api, event]
+    else
+      render json: { errors: "there was a problem with the user attending that event" }, status: 422
     end
   end
 end
