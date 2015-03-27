@@ -7,7 +7,7 @@ set :application, 'musiciansWantedAPI'
 set :repo_url, 'git@github.com:caneroj1/musiciansWantedAPI.git'
 
 # Default branch is :master
-set :branch, :rds
+set :branch, :newSNS
 # ask :branch, proc { `git rev-parse --abbrev-ref HEAD`.chomp }.call
 
 # Default deploy_to directory is /var/www/my_app_name
@@ -51,8 +51,16 @@ task :set_env do
   end
 end
 
+desc "Precompile production assets."
+task :precompile do
+ on roles(:web) do
+   execute "cd #{path_to_app}; RAILS_ENV=production bin/rake assets:precompile"
+ end
+end
+
 after("deploy", "bundle")
 after("deploy", "set_env")
+after("deploy", "precompile")
 
 namespace :deploy do
   after :restart, :clear_cache do
