@@ -30,7 +30,7 @@ module Api
       g.helper_specs false
       g.stylesheets = false
       g.javascripts = false
-      g.helper = false
+      g.helper = true
     end
 
     config.autoload_paths += %W(\#{config.root}/lib)
