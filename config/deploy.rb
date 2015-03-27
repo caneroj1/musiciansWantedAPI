@@ -54,7 +54,7 @@ end
 desc "Precompile production assets."
 task :precompile do
  on roles(:web) do
-   execute "cd #{path_to_app}; RAILS_ENV=production bin/rake assets:precompile"
+   execute "cd #{path_to_app}/current; RAILS_ENV=production bin/rake assets:precompile"
  end
 end
 
