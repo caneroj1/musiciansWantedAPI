@@ -11,14 +11,13 @@ class Api::V1::SessionsController < ApplicationController
         :password      => params[:password]
       })
     rescue
-      puts "There was an error with soundcloud. The params: #{params.inspect}"
       login_success = false
     end
 
     if login_success
       user = find_or_create_user(client)
       if user.errors.empty?
-        render json: { user_id: user.id, soundcloud: client.to_json }, status: 200
+        render json: { user_id: user.id, refresh_token: client.refresh_token }, status: 200
       else
         render json: { errors: user.errors  }, status: 404
       end
