@@ -22,6 +22,7 @@ Rails.application.routes.draw do
       get 'sendEmail', to: 'ses_emails#sendEmail', defaults: { format: :html }
       get 's3upload', to: 's3_storages#s3upload', defaults: { format: :html }
       get 'checkBounce', to: 'sns_notifications#checkBounce', defaults: { format: :html }
+      post 'login', to: 'sessions#login', defaults: { format: :json }
     end
   end
 end
