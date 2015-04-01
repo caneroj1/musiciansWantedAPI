@@ -26,6 +26,10 @@ RSpec.describe User do
       expect(FactoryGirl.build(:user, email: nil)).to_not be_valid
     end
 
+    it 'needs a unique email' do
+      expect { FactoryGirl.create(:user, email: user.email) }.to raise_error
+    end
+
     context 'email validation' do
       it 'needs an @' do
         expect(FactoryGirl.build(:user, email: "email.com")).to_not be_valid
