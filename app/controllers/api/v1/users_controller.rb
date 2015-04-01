@@ -39,6 +39,9 @@ class Api::V1::UsersController < ApplicationController
 	def update
 		update_user = User.find_by_id(params[:id])
 
+		# remove email address from the params if it is the same
+		params[:user].delete_if { |key, value| value.eql?(update_user.email) && key.eql?("email")}
+
 		if !update_user.nil? && update_user.update(params[:user])
 			render json: update_user, status: 200, location: [:api, update_user]
 		else
