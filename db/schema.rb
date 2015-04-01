@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150316172641) do
+ActiveRecord::Schema.define(version: 20150401190027) do
 
   create_table "events", force: :cascade do |t|
     t.datetime "created_at", null: false
@@ -32,11 +32,13 @@ ActiveRecord::Schema.define(version: 20150316172641) do
 
   create_table "users", force: :cascade do |t|
     t.string   "name"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",                       null: false
+    t.datetime "updated_at",                       null: false
     t.string   "email"
     t.integer  "age"
     t.string   "location"
+    t.boolean  "looking_for_band", default: false
+    t.boolean  "looking_to_jam",   default: false
   end
 
 end
