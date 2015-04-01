@@ -5,5 +5,3 @@ rvm:
   - "2.2.0"
 env:
   - api_access_token=yes
-  - soundcloud_username=caneroj1@tcnj.edu
-  - soundcloud_password=musicianswanted
