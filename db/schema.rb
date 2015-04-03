@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150401203732) do
+ActiveRecord::Schema.define(version: 20150403161116) do
 
   create_table "events", force: :cascade do |t|
     t.datetime "created_at", null: false
@@ -29,6 +29,15 @@ ActiveRecord::Schema.define(version: 20150401203732) do
 
   add_index "events_users", ["event_id"], name: "index_events_users_on_event_id"
   add_index "events_users", ["user_id"], name: "index_events_users_on_user_id"
+
+  create_table "messages", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer  "user_id"
+    t.string   "subject"
+    t.string   "body"
+    t.integer  "sent_by"
+  end
 
   create_table "users", force: :cascade do |t|
     t.string   "name"
