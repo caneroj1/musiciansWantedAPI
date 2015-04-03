@@ -4,7 +4,8 @@ class Message < ActiveRecord::Base
   validates :subject, :body, presence: true
 
   belongs_to :user
-
+  has_many :replies
+  
   def sender
     User.find_by_id(sent_by)
   end

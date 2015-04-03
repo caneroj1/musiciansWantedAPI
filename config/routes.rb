@@ -19,7 +19,9 @@ Rails.application.routes.draw do
         end
       end
 
-      resources :messages, defaults: { format: :json }, except: [:index, :update, :edit, :new]
+      resources :messages, defaults: { format: :json }, except: [:index, :update, :edit, :new] do
+        resources :replies, defaults: { format: :json }, except: [:index, :update, :edit, :new]
+      end
 
       get 'sendEmail', to: 'ses_emails#sendEmail', defaults: { format: :html }
       post 's3upload', to: 's3_storages#s3upload', defaults: { format: :json }

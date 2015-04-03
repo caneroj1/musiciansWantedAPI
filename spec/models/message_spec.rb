@@ -29,6 +29,7 @@ RSpec.describe Message, type: :model do
 
   context 'associations' do
     it { should belong_to :user }
+    it { should have_many :replies }
   end
 
   context 'instance methods' do
