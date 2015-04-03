@@ -5,13 +5,13 @@ Rails.application.routes.draw do
 
   namespace :api, defaults: { format: :json } do
     scope module: :v1, constraints: ApiConstraints.new(version: 1, default: true) do
-      resources :users, defaults: { format: :json } do
+      resources :users, defaults: { format: :json }, except: [:edit, :new] do
         member do
           get 'events', to: 'users#get_events'
         end
       end
 
-      resources :events, defaults: { format: :json } do
+      resources :events, defaults: { format: :json }, except: [:edit, :new] do
         member do
           get 'creator', to: 'events#get_event_creator'
           get 'attendees', to: 'events#get_event_attendees'
@@ -19,7 +19,7 @@ Rails.application.routes.draw do
         end
       end
 
-      resources :messages, defaults: { format: :json }, except: [:index]
+      resources :messages, defaults: { format: :json }, except: [:index, :update, :edit, :new]
 
       get 'sendEmail', to: 'ses_emails#sendEmail', defaults: { format: :html }
       post 's3upload', to: 's3_storages#s3upload', defaults: { format: :json }

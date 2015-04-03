@@ -105,4 +105,53 @@ RSpec.describe Api::V1::MessagesController, type: :controller do
       end
     end
   end
+
+  describe 'DELETE #destroy' do
+    context 'with an existing message' do
+      before(:each) do
+        message = FactoryGirl.create(:message)
+        @count = Message.count
+        delete :destroy, id: message.id, format: :json
+      end
+
+      it 'should delete the message' do
+        expect(json_response[:info]).to eq("delete successful")
+      end
+
+      it 'should respond with 200' do
+        expect(response.status).to eq(200)
+      end
+
+      it 'should have an info key' do
+        expect(json_response).to have_key(:info)
+      end
+
+      it 'should change the number of messages' do
+        expect(Message.count).to eq(@count - 1)
+      end
+    end
+
+    context 'with a nonexistent message' do
+      before(:each) do
+        @count = Message.count
+        delete :destroy, id: -1, format: :json
+      end
+
+      it 'should have an errors key' do
+        expect(json_response).to have_key(:errors)
+      end
+
+      it 'should say the delete was unsuccessful' do
+        expect(json_response[:errors]).to eq("delete unsuccessful")
+      end
+
+      it 'should respond with 422' do
+        expect(response.status).to eq(422)
+      end
+
+      it 'should not change the number of messages' do
+        expect(Message.count).to eq(@count)
+      end
+    end
+  end
 end

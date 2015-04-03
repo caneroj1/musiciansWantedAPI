@@ -24,4 +24,16 @@ class Api::V1::MessagesController < ApplicationController
       render json: { errors: errors }, status: 422
     end
   end
+
+  ## DELETE
+  # destroys the specified message
+  def destroy
+    delete_message = Message.find_by_id(params[:id])
+
+    if !delete_message.nil? && delete_message.delete
+      render json: { info: "delete successful" }, status: 200, location: [:api, delete_message]
+    else
+      render json: { errors: "delete unsuccessful" }, status: 422
+    end
+  end
 end
