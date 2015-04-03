@@ -1,5 +1,4 @@
 class Api::V1::MessagesController < ApplicationController
-
   ## GET
   # show. returns the json for a message
   def show
