@@ -71,9 +71,38 @@ RSpec.describe User do
     it 'has a location' do
       expect(FactoryGirl.build(:user).location).to_not be_blank
     end
+
+    it 'can be looking for a band' do
+      expect(user.looking_for_band).to_not be_nil
+    end
+
+    it 'can be looking to jam' do
+      expect(user.looking_to_jam).to_not be_nil
+    end
+
+    it 'defaults looking for band to false' do
+      expect(user.looking_for_band).to eq(false)
+    end
+
+    it 'defaults looking to jam to false' do
+      expect(user.looking_to_jam).to eq(false)
+    end
+
+    it 'defaults has a profile picture to false' do
+      expect(user.has_profile_pic).to eq(false)
+    end
   end
 
   context 'associations' do
     it { should have_and_belong_to_many :events }
+    it { should have_many :messages }
+  end
+
+  context 'instance methods' do
+    let(:user) { FactoryGirl.create(:user_with_messages) }
+
+    it '#sent_messages should return every message a user sent' do
+      expect(user.sent_messages.count).to eq(5)
+    end
   end
 end

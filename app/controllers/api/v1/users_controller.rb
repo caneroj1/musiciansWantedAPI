@@ -19,7 +19,7 @@ class Api::V1::UsersController < ApplicationController
 	# parameter in the route.
 	def show
 		respond_to do |format|
-			format.json { render json: User.find(params[:id]) }
+			format.json { render json: User.find_by_id(params[:id]) }
 		end
 	end
 

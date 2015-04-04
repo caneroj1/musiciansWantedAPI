@@ -12,5 +12,11 @@ FactoryGirl.define do
         5.times { user.events << FactoryGirl.create(:event) }
       end
     end
+
+    factory :user_with_messages do
+      after(:create) do |user|
+        5.times { FactoryGirl.create(:message, sent_by: user.id) }
+      end
+    end
   end
 end

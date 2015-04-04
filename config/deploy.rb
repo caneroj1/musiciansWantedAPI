@@ -52,6 +52,13 @@ task :set_env do
   end
 end
 
+desc "Restart the server"
+task :restart do
+  on roles(:web) do
+    execute("sudo nginx -s reload")
+  end
+end
+
 desc "Precompile production assets."
 task :precompile do
  on roles(:web) do
@@ -62,6 +69,7 @@ end
 after("deploy", "bundle")
 after("deploy", "set_env")
 after("deploy", "precompile")
+after("deploy", "restart")
 
 namespace :deploy do
   after :restart, :clear_cache do
@@ -70,13 +78,6 @@ namespace :deploy do
       # within release_path do
       #   execute :rake, 'cache:clear'
       # end
-    end
-  end
-
-  desc "Restart the server"
-  task :restart do
-    on roles(:web) do
-      execute("sudo nginx -s reload")
     end
   end
 
