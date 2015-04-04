@@ -20,7 +20,7 @@ Rails.application.routes.draw do
       end
 
       resources :messages, defaults: { format: :json }, except: [:index, :update, :edit, :new] do
-        resources :replies, defaults: { format: :json }, only: [:create, :destroy]
+        resources :replies, defaults: { format: :json }, only: [:create, :destroy, :show]
       end
 
       get 'sendEmail', to: 'ses_emails#sendEmail', defaults: { format: :html }

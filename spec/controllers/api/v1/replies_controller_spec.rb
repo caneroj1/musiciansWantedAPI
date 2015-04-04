@@ -1,6 +1,70 @@
 require 'rails_helper'
 
 RSpec.describe Api::V1::RepliesController, type: :controller do
+  describe 'GET #show' do
+    context 'successful GET' do
+      before(:each) do
+        message = FactoryGirl.create(:message_with_replies)
+        reply = message.replies.first
+        get :show, { message_id: message.id, id: reply.id }, format: :json
+      end
+
+      it 'should respond with 200' do
+        expect(response.status).to eq(200)
+      end
+
+      it 'should respond with json' do
+        expect(json_response).to have_key(:body)
+      end
+
+      it 'should be a hash' do
+        expect(json_response[:body]).to_not eq(nil)
+      end
+    end
+
+    context 'unsuccessful GET' do
+      context 'message does not exist' do
+        before(:each) do
+          message = FactoryGirl.create(:message_with_replies)
+          reply = message.replies.first
+          get :show, { message_id: -1, id: reply.id }, format: :json
+        end
+
+        it 'should respond with 422' do
+          expect(response.status).to eq(422)
+        end
+
+        it 'should have an errors key' do
+          expect(json_response).to have_key(:errors)
+        end
+
+        it 'should explain the problem' do
+          expect(json_response[:errors]).to eq("message does not exist")
+        end
+      end
+
+      context 'reply does not exist' do
+        before(:each) do
+          message = FactoryGirl.create(:message_with_replies)
+          reply = message.replies.first
+          get :show, { message_id: message.id, id: -1 }, format: :json
+        end
+
+        it 'should respond with 422' do
+          expect(response.status).to eq(422)
+        end
+
+        it 'should have an errors key' do
+          expect(json_response).to have_key(:errors)
+        end
+
+        it 'should explain the problem' do
+          expect(json_response[:errors]).to eq("reply not found")
+        end
+      end
+    end
+  end
+
   describe 'POST #create' do
     context 'successful creation' do
       before(:each) do
