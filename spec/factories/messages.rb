@@ -5,7 +5,7 @@ FactoryGirl.define do
 
     factory :message_with_replies do
       after(:create) do |message|
-        message.replies << FactoryGirl.create(:reply)
+        5.times { message.replies << FactoryGirl.create(:reply) }
       end
     end
   end

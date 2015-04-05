@@ -1,5 +1,18 @@
 class Api::V1::RepliesController < ApplicationController
   ## GET
+  # returns all of the replies associated with a given message
+  def index
+    message = Message.find_by_id(params[:message_id])
+
+    if message.nil?
+      render json: { errors: "message does not exist" }, status: 422
+      return
+    end
+
+    render json: message.replies, status: 200
+  end
+
+  ## GET
   # gets the info for a specific reply
   def show
     message = Message.find_by_id(params[:message_id])

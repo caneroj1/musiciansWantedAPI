@@ -8,6 +8,8 @@ Rails.application.routes.draw do
       resources :users, defaults: { format: :json }, except: [:edit, :new] do
         member do
           get 'events', to: 'users#get_events'
+          get 'messages', to: 'users#get_messages'
+          get 'sent_messages', to: 'users#get_sent_messages'
         end
       end
 
@@ -20,7 +22,7 @@ Rails.application.routes.draw do
       end
 
       resources :messages, defaults: { format: :json }, except: [:index, :update, :edit, :new] do
-        resources :replies, defaults: { format: :json }, only: [:create, :destroy, :show]
+        resources :replies, defaults: { format: :json }, only: [:index, :create, :destroy, :show]
       end
 
       get 'sendEmail', to: 'ses_emails#sendEmail', defaults: { format: :html }

@@ -198,4 +198,88 @@ RSpec.describe Api::V1::UsersController do
       end
     end
   end
+
+  describe 'GET #get_messages' do
+    context 'user exists' do
+      before(:each) do
+        @user = FactoryGirl.create(:user_with_received_messages)
+        @message_count = @user.messages.count
+        get :get_messages, { id: @user.id }, format: :json
+      end
+
+      it 'should return all of the user\'s received messages' do
+        expect(json_response.count).to eq(@message_count)
+      end
+
+      it 'should return them in json hash format' do
+        expect(json_response[0][:subject]).to_not be_blank
+      end
+
+      it 'should respond with 200' do
+        expect(response.status).to eq(200)
+      end
+    end
+
+    context 'user does not exist' do
+      before(:each) do
+        get :get_messages, { id: -1 }, format: :json
+      end
+
+      it 'should return an errors json indicating there was a problem' do
+        user_response = json_response
+        expect(user_response).to have_key(:errors)
+      end
+
+      it 'should say that there was a problem' do
+        user_response = json_response
+        expect(user_response[:errors]).to include("does not exist")
+      end
+
+      it 'should respond with 422' do
+        expect(response.status).to eq(422)
+      end
+    end
+  end
+
+  describe 'GET #get_sent_messages' do
+    context 'user exists' do
+      before(:each) do
+        @user = FactoryGirl.create(:user_with_messages)
+        @message_count = Message.where("sent_by = ?", @user.id).count
+        get :get_sent_messages, { id: @user.id }, format: :json
+      end
+
+      it 'should return all of the user\'s sent messages' do
+        expect(json_response.count).to eq(@message_count)
+      end
+
+      it 'should return them in json hash format' do
+        expect(json_response[0][:subject]).to_not be_blank
+      end
+
+      it 'should respond with 200' do
+        expect(response.status).to eq(200)
+      end
+    end
+
+    context 'user does not exist' do
+      before(:each) do
+        get :get_messages, { id: -1 }, format: :json
+      end
+
+      it 'should return an errors json indicating there was a problem' do
+        user_response = json_response
+        expect(user_response).to have_key(:errors)
+      end
+
+      it 'should say that there was a problem' do
+        user_response = json_response
+        expect(user_response[:errors]).to include("does not exist")
+      end
+
+      it 'should respond with 422' do
+        expect(response.status).to eq(422)
+      end
+    end
+  end
 end

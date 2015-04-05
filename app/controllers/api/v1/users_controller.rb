@@ -74,4 +74,28 @@ class Api::V1::UsersController < ApplicationController
 		end
 	end
 
+	## GET
+	# returns all of the received messages associated with a user
+	def get_messages
+		user = User.find_by_id(params[:id])
+
+		if !user.nil?
+			render json: user.messages, status: 200
+		else
+			render json: { errors: "that user does not exist" }, status: 422
+		end
+	end
+
+	## GET
+	# returns all of the sent messages associated with a user
+	def get_sent_messages
+		user = User.find_by_id(params[:id])
+
+		if !user.nil?
+			sent_messages = Message.where("sent_by = ?", params[:id])
+			render json: sent_messages, status: 200
+		else
+			render json: { errors: "that user does not exist" }, status: 422
+		end
+	end
 end

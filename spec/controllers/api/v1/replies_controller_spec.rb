@@ -1,6 +1,67 @@
 require 'rails_helper'
 
 RSpec.describe Api::V1::RepliesController, type: :controller do
+  describe 'GET #index' do
+    context 'successful GET for index' do
+      before(:each) do
+        @message = FactoryGirl.create(:message_with_replies)
+        get :index, { message_id: @message.id }, format: :json
+      end
+
+      it 'should return all of the replies for a given message' do
+        expect(json_response.count).to eq(@message.replies.count)
+      end
+
+      it 'should respond with 200' do
+        expect(response.status).to eq(200)
+      end
+
+      it 'should return an array of hashes' do
+        expect(json_response.first.class).to eq(Hash)
+      end
+
+      it 'should contain data' do
+        first_reply = json_response.first
+        expect(first_reply[:body]).to_not eq(nil)
+      end
+    end
+
+    context 'successful GET with no replies' do
+      before(:each) do
+        @message = FactoryGirl.create(:message)
+        get :index, { message_id: @message.id }, format: :json
+      end
+
+      it 'should respond with 200' do
+        expect(response.status).to eq(200)
+      end
+
+      it 'should return an empty array' do
+        expect(json_response).to be_empty
+      end
+    end
+
+    context 'unsuccessful GET' do
+      context 'message does not exist' do
+        before(:each) do
+          get :index, { message_id: -1 }, format: :json
+        end
+
+        it 'should respond with 422' do
+          expect(response.status).to eq(422)
+        end
+
+        it 'should return errors' do
+          expect(json_response).to have_key(:errors)
+        end
+
+        it 'should say what happened' do
+          expect(json_response[:errors]).to eq("message does not exist")
+        end
+      end
+    end
+  end
+
   describe 'GET #show' do
     context 'successful GET' do
       before(:each) do
