@@ -12,6 +12,10 @@ class User < ActiveRecord::Base
 	has_and_belongs_to_many :events
 	has_many :messages
 
+	# for location services
+	geocoded_by :location
+	after_validation :geocode
+
 	# a user's age must be an integer >= 1 or it can be nil if the user does not
 	# want to disclose their age.
 	def validate_age_on_create_or_update
