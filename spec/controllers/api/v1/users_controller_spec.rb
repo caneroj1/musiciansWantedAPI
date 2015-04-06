@@ -15,6 +15,49 @@ RSpec.describe Api::V1::UsersController do
     end
   end
 
+  describe 'GET #near_me' do
+    context 'with existing user' do
+      before(:each) do
+        @user = FactoryGirl.create(:user_with_location)
+        FactoryGirl.create(:user, location: "Bronx, NY, USA")
+        get :near_me, { id: @user.id }, format: :json
+      end
+
+      it 'should find nearby users' do
+        expect(json_response).to_not be_empty
+      end
+
+      it 'should have distance in the response' do
+        expect(json_response[0]).to have_key(:distance)
+      end
+
+      it 'should respond with 200' do
+        expect(response.status).to eq(200)
+      end
+    end
+
+    context 'with nonexistent user' do
+      before(:each) do
+        @user = FactoryGirl.create(:user_with_location)
+        FactoryGirl.create(:user, location: "Bronx, NY, USA")
+        get :near_me, { id: -1 }, format: :json
+      end
+
+      it 'should respond with 422' do
+        expect(response.status).to eq(422)
+      end
+
+      it 'should have errors' do
+        expect(json_response).to have_key(:errors)
+      end
+
+      it 'should say what happened' do
+        expect(json_response[:errors]).to include("does not exist")
+      end
+    end
+
+  end
+
   describe 'GET #show' do
     before(:each) do
       @user = FactoryGirl.create :user

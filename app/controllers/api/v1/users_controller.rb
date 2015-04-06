@@ -98,4 +98,17 @@ class Api::V1::UsersController < ApplicationController
 			render json: { errors: "that user does not exist" }, status: 422
 		end
 	end
+
+	## GET
+	# does a search with the geocoder and finds all the users within
+	# the specified geographic area with the specified distance parameter
+	def near_me
+		user = User.find_by_id(params[:id])
+
+		if !user.nil?
+			render json: User.near(user.location, 10), status: 200, location: [:api, user]
+		else
+			render json: { errors: "that user does not exist" }, status: 422
+		end
+	end
 end
