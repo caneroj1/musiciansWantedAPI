@@ -106,7 +106,8 @@ class Api::V1::UsersController < ApplicationController
 		user = User.find_by_id(params[:id])
 
 		if !user.nil?
-			render json: User.near(user.location, 10), status: 200, location: [:api, user]
+			results = User.near(user.location, 10).where("id != ?", params[:id])
+			render json: results, status: 200, location: [:api, user]
 		else
 			render json: { errors: "that user does not exist" }, status: 422
 		end

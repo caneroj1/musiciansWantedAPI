@@ -27,6 +27,10 @@ RSpec.describe Api::V1::UsersController do
         expect(json_response).to_not be_empty
       end
 
+      it 'should not return the user who conducted the search' do
+        expect(json_response.count).to eq(1)
+      end
+
       it 'should have distance in the response' do
         expect(json_response[0]).to have_key(:distance)
       end
@@ -55,7 +59,6 @@ RSpec.describe Api::V1::UsersController do
         expect(json_response[:errors]).to include("does not exist")
       end
     end
-
   end
 
   describe 'GET #show' do
