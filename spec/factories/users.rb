@@ -5,7 +5,6 @@ FactoryGirl.define do
     name { FFaker::Name.name }
     email { FFaker::Internet.email }
     age { rand(40) + 10 }
-    location { FakerSupport.location }
 
     factory :user_with_events do
       after(:create) do |user|
@@ -23,6 +22,10 @@ FactoryGirl.define do
       after(:create) do |user|
         5.times { FactoryGirl.create(:message, user_id: user.id) }
       end
+    end
+
+    factory :user_with_location do
+      location { 'New York, NY' }
     end
   end
 end
