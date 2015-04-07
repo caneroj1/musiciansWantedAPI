@@ -69,7 +69,7 @@ RSpec.describe User do
     end
 
     it 'has a location' do
-      expect(FactoryGirl.build(:user).location).to_not be_blank
+      expect(FactoryGirl.build(:user_with_location).location).to_not be_nil
     end
 
     it 'can be looking for a band' do
