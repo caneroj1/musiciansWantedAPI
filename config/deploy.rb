@@ -96,7 +96,7 @@ namespace :deploy do
   task :migrations do
     on roles(:web) do
       Capistrano::Application.invoke("deploy")
-      execute "cd #{path_to_app}/current; rake db:migrate;"
+      execute "cd #{path_to_app}/current; rake db:migrate RAILS_ENV=\"production\";"
     end
   end
 
