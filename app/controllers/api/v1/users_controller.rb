@@ -106,7 +106,7 @@ class Api::V1::UsersController < ApplicationController
 		user = User.find_by_id(params[:id])
 
 		if !user.nil?
-			results = User.near(user.location, 10).where("id != ?", params[:id])
+			results = User.near(user.location, user.search_radius).where("id != ?", params[:id])
 			render json: results, status: 200, location: [:api, user]
 		else
 			render json: { errors: "that user does not exist" }, status: 422
@@ -120,7 +120,7 @@ class Api::V1::UsersController < ApplicationController
 		user = User.find_by_id(params[:id])
 
 		if !user.nil?
-			results = Event.near(user.location, 10)
+			results = Event.near(user.location, user.search_radius)
 			render json: results, status: 200, location: [:api, user]
 		else
 			render json: { errors: "that user does not exist" }, status: 422

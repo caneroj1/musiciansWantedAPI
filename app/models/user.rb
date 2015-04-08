@@ -1,9 +1,12 @@
 class User < ActiveRecord::Base
-	attr_accessible :name, :email, :age, :location, :looking_for_band, :looking_to_jam, :has_profile_pic
+	attr_accessible :name, :email, :age, :location, :looking_for_band,
+									:looking_to_jam, :has_profile_pic, :search_radius, :gender
 
 	validates :name, :email, presence: true
-	validates :email, format: { with: /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/i, message: %q{is not valid} }
-	validates :email, uniqueness: true
+	validates :email, format: { with: /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/i, message: %q{is not valid} },
+										uniqueness: true
+	validates :search_radius, numericality: { less_than_or_equal_to: 20, greater_than_or_equal_to: 5 }
+	validates :gender, inclusion: { in: ["male", "female", "none"], message: %q{needs to selected.} }
 
 	# perform custom validation on the age
 	validate :validate_age_on_create_or_update

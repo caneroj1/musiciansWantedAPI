@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150408025429) do
+ActiveRecord::Schema.define(version: 20150408175739) do
 
   create_table "events", force: :cascade do |t|
     t.datetime "created_at", null: false
@@ -51,8 +51,8 @@ ActiveRecord::Schema.define(version: 20150408025429) do
 
   create_table "users", force: :cascade do |t|
     t.string   "name"
-    t.datetime "created_at",                       null: false
-    t.datetime "updated_at",                       null: false
+    t.datetime "created_at",                        null: false
+    t.datetime "updated_at",                        null: false
     t.string   "email"
     t.integer  "age"
     t.string   "location"
@@ -61,6 +61,8 @@ ActiveRecord::Schema.define(version: 20150408025429) do
     t.boolean  "has_profile_pic",  default: false
     t.float    "latitude"
     t.float    "longitude"
+    t.integer  "search_radius",    default: 10
+    t.string   "gender",           default: "none"
   end
 
 end
