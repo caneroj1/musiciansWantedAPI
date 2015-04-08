@@ -18,6 +18,7 @@ RSpec.describe Api::V1::UsersController do
   describe 'GET #near_me' do
     context 'with existing user' do
       before(:each) do
+        sleep 1
         @user = FactoryGirl.create(:user_with_location)
         FactoryGirl.create(:user, location: "Bronx, NY, USA")
         get :near_me, { id: @user.id }, format: :json
@@ -42,6 +43,7 @@ RSpec.describe Api::V1::UsersController do
 
     context 'with nonexistent user' do
       before(:each) do
+        sleep 1
         @user = FactoryGirl.create(:user_with_location)
         FactoryGirl.create(:user, location: "Bronx, NY, USA")
         get :near_me, { id: -1 }, format: :json
@@ -57,6 +59,49 @@ RSpec.describe Api::V1::UsersController do
 
       it 'should say what happened' do
         expect(json_response[:errors]).to include("does not exist")
+      end
+    end
+  end
+
+  describe 'GET #events_near_me' do
+    context 'with existing user' do
+      before(:each) do
+        sleep 1
+        @user = FactoryGirl.create(:user_with_location)
+        FactoryGirl.create(:event, location: @user.location)
+        get :events_near_me, { id: @user.id }, format: :json
+      end
+
+      it 'should return the nearby events' do
+        expect(json_response).to_not be_empty
+      end
+
+      it 'should respond with 200' do
+        expect(response.status).to eq(200)
+      end
+
+      it 'should have the distance for each event' do
+        expect(json_response[0]).to have_key(:distance)
+      end
+    end
+
+    context 'with nonexistent user' do
+      before(:each) do
+        sleep 1
+        FactoryGirl.create(:event)
+        get :events_near_me, { id: -1 }, format: :json
+      end
+
+      it 'should have an error' do
+        expect(json_response).to have_key(:errors)
+      end
+
+      it 'should say what happened' do
+        expect(json_response[:errors]).to include("does not exist")
+      end
+
+      it 'should respond with 422' do
+        expect(response.status).to eq(422)
       end
     end
   end

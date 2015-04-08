@@ -91,6 +91,38 @@ RSpec.describe User do
     it 'defaults has a profile picture to false' do
       expect(user.has_profile_pic).to eq(false)
     end
+
+    it 'has a search radius' do
+      expect(user.search_radius).to_not eq(nil)
+    end
+
+    it 'defaults search radius to 10 miles' do
+      expect(user.search_radius).to eq(10)
+    end
+
+    it 'cannot have search radius less than 5' do
+      expect(FactoryGirl.build(:user, search_radius: 4)).to_not be_valid
+    end
+
+    it 'cannot have search radius more than 20' do
+      expect(FactoryGirl.build(:user, search_radius: 21)).to_not be_valid
+    end
+
+    it 'can have gender' do
+      expect(user.gender).to_not be_blank
+    end
+
+    it 'can have a male gender' do
+      expect(FactoryGirl.build(:user, gender: "male")).to be_valid
+    end
+
+    it 'can have a female gender' do
+      expect(FactoryGirl.build(:user, gender: "female")).to be_valid
+    end
+
+    it 'cannot have blank genders' do
+      expect(FactoryGirl.build(:user, gender: "")).to_not be_valid
+    end
   end
 
   context 'associations' do

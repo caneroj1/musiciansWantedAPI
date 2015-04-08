@@ -35,6 +35,7 @@ RSpec.describe Api::V1::EventsController, type: :controller do
   describe 'POST #create' do
     context "when successfully created" do
       before(:each) do
+        sleep 1
         @user = FactoryGirl.create(:user)
         @event_attributes = FactoryGirl.attributes_for :event, created_by: @user.id
         post :create, { event: @event_attributes }, format: :json
@@ -60,6 +61,7 @@ RSpec.describe Api::V1::EventsController, type: :controller do
 
     context 'when is not created' do
       before(:each) do
+        sleep 1
         @user = FactoryGirl.create(:user)
         @event_attributes = { created_by: @user.id }
         post :create, { event: @event_attributes }, format: :json
@@ -81,6 +83,7 @@ RSpec.describe Api::V1::EventsController, type: :controller do
 
     context 'when user does not exist' do
       before(:each) do
+        sleep 1
         @event_attributes = FactoryGirl.attributes_for :event, created_by: -1
         post :create, { event: @event_attributes }, format: :json
         @event_response = json_response
@@ -103,6 +106,7 @@ RSpec.describe Api::V1::EventsController, type: :controller do
   describe 'PUT/PATCH #update' do
     context 'when is successfully updated' do
       before(:each) do
+        sleep 1
         @event = FactoryGirl.create(:event)
         patch :update, { id: @event.id, event: { title: "Super Pool Party"} }, format: :json
       end
@@ -119,6 +123,7 @@ RSpec.describe Api::V1::EventsController, type: :controller do
 
     context 'when is not successful' do
       before(:each) do
+        sleep 1
         @event = FactoryGirl.create(:event)
         patch :update, { id: @event.id, event: { title: "" } }
       end

@@ -19,11 +19,11 @@ RSpec.describe Event, type: :model do
     end
 
     it 'has a location' do
-      expect(event.location).to_not be_blank
+      expect(FactoryGirl.build(:event)).to be_valid
     end
 
     it 'requires a location' do
-      expect(FactoryGirl.build(:event, location: nil)).to_not be_valid
+      expect(event.location).to_not be_blank
     end
 
     it 'has an event_time' do
