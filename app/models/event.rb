@@ -5,4 +5,8 @@ class Event < ActiveRecord::Base
 
   # an event has many users attending, but events also belongs to users
   has_and_belongs_to_many :users
+
+  # for location services
+	geocoded_by :location
+	after_validation :geocode
 end

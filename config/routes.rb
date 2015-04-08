@@ -11,6 +11,7 @@ Rails.application.routes.draw do
           get 'messages', to: 'users#get_messages'
           get 'sent_messages', to: 'users#get_sent_messages'
           get 'near_me', to: 'users#near_me'
+          get 'events_near_me', to: 'users#events_near_me'
         end
       end
 
