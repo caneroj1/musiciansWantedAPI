@@ -5,7 +5,7 @@ class CreateNotifications < ActiveRecord::Migration
       t.string :location, default: ""
       t.float :latitude
       t.float :longitude
-      t.integer :type
+      t.integer :notification_type
       t.timestamps null: false
     end
   end

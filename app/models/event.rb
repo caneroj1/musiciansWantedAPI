@@ -9,4 +9,15 @@ class Event < ActiveRecord::Base
   # for location services
 	geocoded_by :location
 	after_validation :geocode
+
+  after_create :create_notification
+
+  # creates a notification that an event was created
+	def create_notification
+		Notification.create(title: self.title,
+												notification_type: 0,
+												location: self.location,
+												latitude: self.latitude,
+												longitude: self.longitude)
+	end
 end

@@ -1,7 +1,7 @@
 class Notification < ActiveRecord::Base
-  attr_accessible :title, :location, :type, :latitude, :longitude
+  attr_accessible :title, :location, :notification_type, :latitude, :longitude
 
-  validates :title, :type, presence: true
+  validates :title, :notification_type, presence: true
 
   geocoded_by :location
 
@@ -9,7 +9,7 @@ class Notification < ActiveRecord::Base
 
   def correct_title
     self.title =
-    if type.eql?(0)
+    if notification_type.eql?(0)
       "Event: #{self.title} was created."
     else
       "#{self.title} created an account."

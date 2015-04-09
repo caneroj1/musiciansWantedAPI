@@ -24,7 +24,7 @@ RSpec.describe Notification, type: :model do
     end
 
     it 'has the correct type' do
-      expect(@event_notification.type).to eq(0)
+      expect(@event_notification.notification_type).to eq(0)
     end
   end
 
@@ -39,7 +39,17 @@ RSpec.describe Notification, type: :model do
     end
 
     it 'has the correct type' do
-      expect(@user_notification.type).to eq(1)
+      expect(@user_notification.notification_type).to eq(1)
+    end
+  end
+
+  context 'creation' do
+    it 'is created when a new user is created' do
+      expect { FactoryGirl.create(:user) }.to change(Notification, :count).by 1
+    end
+
+    it 'is created when a new event is created' do
+      expect { FactoryGirl.create(:event) }.to change(Notification, :count).by 1
     end
   end
 end
