@@ -10,7 +10,7 @@ class Api::V1::NotificationsController < ApplicationController
 
     if !user.nil?
       results =
-      if !user.location.nil?
+      if !user.location.blank?
         Notification.near(user.location, user.search_radius).order(created_at: :desc).last(30)
       else
         Notification.order(created_at: :desc).last(30)
