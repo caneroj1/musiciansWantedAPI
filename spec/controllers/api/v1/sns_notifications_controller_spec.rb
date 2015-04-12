@@ -2,9 +2,30 @@ require 'rails_helper'
 
 RSpec.describe Api::V1::SnsNotificationsController, type: :controller do
   describe 'POST #subscribe' do
+    context 'with an already taken cell number' do
+      before(:each) do
+        FactoryGirl.create(:user, cell: ENV["rspec_cell"])
+        @user = FactoryGirl.create(:user, cell: "")
+        post :subscribe, { cell: ENV["test_cell"], id: @user.id }, format: :json
+      end
+
+      it 'should have a cell error' do
+        expect(json_response).to have_key(:cell)
+      end
+
+      it 'should say what went wrong' do
+        expect(json_response[:cell][0]).to include("already been taken")
+      end
+
+      it 'should respond with 422' do
+        expect(response.status).to eq(422)
+      end
+    end
+
     context 'with incorrect cell number' do
       before(:each) do
-        post :subscribe, { cell: "111-222-3333" }, format: :json
+        @user = FactoryGirl.create(:user, cell: "11112223333")
+        post :subscribe, { cell: "111-222-3333", id: @user.id }, format: :json
       end
 
       it 'should have an error' do
@@ -22,7 +43,8 @@ RSpec.describe Api::V1::SnsNotificationsController, type: :controller do
 
     context 'with unsupported sms endpoint' do
       before(:each) do
-        post :subscribe, { cell: ENV["bad_cell"] }, format: :json
+        @user = FactoryGirl.create(:user, cell: "11112223333")
+        post :subscribe, { cell: ENV["bad_cell"], id: @user.id }, format: :json
       end
 
       it 'should rescue an error' do

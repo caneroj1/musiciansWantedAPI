@@ -6,6 +6,7 @@ FactoryGirl.define do
     email   { FFaker::Internet.email }
     age     { rand(40) + 10 }
     gender  { %w{male female none}.sample }
+    cell    { ENV["rspec_cell"] }
 
     factory :user_with_events do
       after(:create) do |user|

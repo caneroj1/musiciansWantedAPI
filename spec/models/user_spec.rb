@@ -123,6 +123,24 @@ RSpec.describe User do
     it 'cannot have blank genders' do
       expect(FactoryGirl.build(:user, gender: "")).to_not be_valid
     end
+
+    it 'can have a cell number' do
+      expect(user.cell).to eq(ENV["rspec_cell"])
+    end
+
+    context 'cell validation' do
+      before(:each) do
+        FactoryGirl.create(:user, cell: ENV["rspec_cell"])
+      end
+
+      it 'must be of the form 1xxxxxxxxxx' do
+        expect(FactoryGirl.build(:user, cell: "1-732-999-9876")).to_not be_valid
+      end
+
+      it 'must be unique' do
+        expect { FactoryGirl.create(:user, cell: ENV["rspec_cell"]) }.to raise_error
+      end
+    end
   end
 
   context 'associations' do

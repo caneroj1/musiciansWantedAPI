@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150412003044) do
+ActiveRecord::Schema.define(version: 20150412213749) do
 
   create_table "events", force: :cascade do |t|
     t.datetime "created_at", null: false
@@ -74,6 +74,9 @@ ActiveRecord::Schema.define(version: 20150412003044) do
     t.float    "longitude"
     t.integer  "search_radius",    default: 10
     t.string   "gender",           default: "none"
+    t.string   "cell",             default: ""
   end
+
+  add_index "users", ["cell"], name: "index_users_on_cell"
 
 end
