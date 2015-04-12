@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150409215614) do
+ActiveRecord::Schema.define(version: 20150412003044) do
 
   create_table "events", force: :cascade do |t|
     t.datetime "created_at", null: false
@@ -49,6 +49,7 @@ ActiveRecord::Schema.define(version: 20150409215614) do
     t.integer  "notification_type"
     t.datetime "created_at",                     null: false
     t.datetime "updated_at",                     null: false
+    t.integer  "record_id"
   end
 
   create_table "replies", force: :cascade do |t|

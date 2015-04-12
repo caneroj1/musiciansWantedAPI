@@ -18,6 +18,7 @@ class Event < ActiveRecord::Base
 												notification_type: 0,
 												location: self.location,
 												latitude: self.latitude,
-												longitude: self.longitude)
+												longitude: self.longitude,
+                        record_id: self.id)
 	end
 end

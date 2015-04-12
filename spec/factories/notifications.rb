@@ -3,6 +3,7 @@ FactoryGirl.define do
     title                 { FakerSupport.event_name }
     location              { FakerSupport.location }
     notification_type     { [0, 1].sample }
+    record_id             { rand(100) + 1 }
 
     factory :event_notification do
       title              { FakerSupport.event_name }
