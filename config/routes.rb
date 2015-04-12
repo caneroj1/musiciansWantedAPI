@@ -33,8 +33,6 @@ Rails.application.routes.draw do
       get 's3get', to: 's3_storages#s3get', defaults: { format: :json }
       get 'checkBounce', to: 'sns_notifications#checkBounce', defaults: { format: :html }
       post 'login', to: 'sessions#login', defaults: { format: :json }
-      post 'subscribe', to: 'sns_notifications#subscribe', defaults: { format: :json }
-      post 'publish', to: 'sns_notifications#publish', defaults: { format: :json }
     end
   end
 end
