@@ -11,6 +11,10 @@ RSpec.describe Notification, type: :model do
     it 'has a location' do
       expect(notification.location).to_not be_blank
     end
+
+    it 'has a record id' do
+      expect(notification.record_id).to_not be_blank
+    end
   end
 
   context 'event notification type' do
@@ -48,8 +52,20 @@ RSpec.describe Notification, type: :model do
       expect { FactoryGirl.create(:user) }.to change(Notification, :count).by 1
     end
 
+    it 'has the id of the user for it notifies creation' do
+      user = FactoryGirl.create(:user)
+      expect(Notification.last.record_id).to eq(user.id)
+    end
+
     it 'is created when a new event is created' do
+      sleep(1)
       expect { FactoryGirl.create(:event) }.to change(Notification, :count).by 1
+    end
+
+    it 'has the id of the event for which it notifies creation' do
+      sleep(1)
+      event = FactoryGirl.create(:event)
+      expect(Notification.last.record_id).to eq(event.id)
     end
   end
 end

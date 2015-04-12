@@ -40,6 +40,7 @@ class User < ActiveRecord::Base
 												notification_type: 1,
 												location: self.location,
 												latitude: self.latitude,
-												longitude: self.longitude)
+												longitude: self.longitude,
+												record_id: self.id)
 	end
 end
