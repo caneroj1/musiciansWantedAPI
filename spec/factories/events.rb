@@ -1,6 +1,7 @@
 FactoryGirl.define do
   factory :event do
     title       { FakerSupport.event_name }
+    description { FakerSupport.description }
     event_time  { FFaker::Time.date }
     created_by  { rand(100) }
     location    { FakerSupport.location }

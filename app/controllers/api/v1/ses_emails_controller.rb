@@ -13,9 +13,9 @@ class Api::V1::SesEmailsController < ApplicationController
 
     sendTo = "harveyh1@tcnj.edu"
 
+
     if params[:email].nil? == false
       sendTo = params[:email]
-
     end
 
     #Used to send email
@@ -31,7 +31,7 @@ class Api::V1::SesEmailsController < ApplicationController
       # required
       subject: {
         # required
-        data: "Testing SES to Non-Verified",
+        data: "Welcome to Musicians Wanted!",
         charset: "UTF-8",
       },
       # required
@@ -43,30 +43,14 @@ class Api::V1::SesEmailsController < ApplicationController
         },
         html: {
           # required
-          data: "Greetings from Musicians Wanted",
+          data: "Thanks for signing up for Musicians Wanted! <br> <br> We hope you enjoy the application!! <br> <br> Thanks,<br>The Musicians Wanted Development Team",
           charset: "UTF-8",
         },
       },
     },
-    reply_to_addresses: ["harveyh1@tcnj.edu"],
+    reply_to_addresses: ["musicianswanted@do-not-reply.com"],
     return_path: "harveyh1@tcnj.edu",
   )
-
-  #Used to get send quote
-  # @sesClient.get_send_quota.each do |response|
-  #   @resp = response.data.max_send_rate
-  # end
-
-
-  # #Used to list verified email addresses
-  # @sesClient.list_verified_email_addresses.each do |response|
-  #   @resp = response.data
-  # end
-
-  # #Used to send verification email
-  # email = 'harveyh1@tcnj.edu'
-  #
-  # @sesClient.verify_email_address(email_address: email)
 
   end
 end

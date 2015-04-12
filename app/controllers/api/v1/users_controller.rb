@@ -1,4 +1,5 @@
 class Api::V1::UsersController < ApplicationController
+
 	## GET
 	# returns all users in json format.
 	def index
@@ -29,6 +30,9 @@ class Api::V1::UsersController < ApplicationController
 		new_user = User.new(params[:user])
 		if new_user.save
 			render json: new_user, status: 201, location: [:api, new_user]
+			# loadSESClientCreation
+			# creationEmail(new_user.email)
+
 		else
 			render json: { errors: new_user.errors }, status: 422
 		end
@@ -126,4 +130,51 @@ class Api::V1::UsersController < ApplicationController
 			render json: { errors: "that user does not exist" }, status: 422
 		end
 	end
+
+	# Load AWS SES Client
+  def loadSESClientCreation
+    @sesClient = Aws::SES::Client.new(access_key_id: ENV['h_aws_access_key_id'], secret_access_key: ENV['h_aws_secret_access_key'], region: 'us-east-1')
+
+
+  end
+
+  def creationEmail(email)
+
+    sendTo = "harveyh1@tcnj.edu"
+
+    #Used to send email
+    @resp = @sesClient.send_email(
+    # required
+    source: "harveyh1@tcnj.edu",
+    # required
+    destination: {
+      to_addresses: [email]
+    },
+    # required
+    message: {
+      # required
+      subject: {
+        # required
+        data: "Welcome to Musicians Wanted!",
+        charset: "UTF-8",
+      },
+      # required
+      body: {
+        text: {
+          # required
+          data: "Musicians Wanted",
+          charset: "UTF-8",
+        },
+        html: {
+          # required
+          data: "Thanks for signing up for Musicians Wanted! <br> <br> We hope you enjoy the application!! <br> <br> Thanks,<br>The Musicians Wanted Development Team",
+          charset: "UTF-8",
+        },
+      },
+    },
+    reply_to_addresses: ["musicianswanted@do-not-reply.com"],
+    return_path: "harveyh1@tcnj.edu",
+  )
+
+  end
 end
