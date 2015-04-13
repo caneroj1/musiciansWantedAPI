@@ -9,12 +9,16 @@ RSpec.describe Api::V1::SnsNotificationsController, type: :controller do
         post :subscribe, { cell: ENV["test_cell"], id: @user.id }, format: :json
       end
 
+      it 'should have an error' do
+        expect(json_response).to have_key(:errors)
+      end
+
       it 'should have a cell error' do
-        expect(json_response).to have_key(:cell)
+        expect(json_response[:errors]).to have_key(:cell)
       end
 
       it 'should say what went wrong' do
-        expect(json_response[:cell][0]).to include("already been taken")
+        expect(json_response[:errors][:cell][0]).to include("already been taken")
       end
 
       it 'should respond with 422' do
