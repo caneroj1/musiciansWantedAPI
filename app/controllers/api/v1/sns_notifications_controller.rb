@@ -54,17 +54,17 @@ class Api::V1::SnsNotificationsController < ApplicationController
       if subscriber
         begin
           target = subscriber.cell
-          puts target
+
           reformatted_number = reformat_number(params[:cell])
           if subscriber.update(cell: reformatted_number)
             next_token = nil
 
             loop do
               @snsClient.list_subscriptions_by_topic(topic_arn: ENV["sms_topic_arn"], next_token: next_token).each do |sub|
-                subscription_arn = sub.subscriptions.select { |scrip| scrip.endpoint.eql?(target) }.first.subscription_arn
+                found_sub = sub.subscriptions.select { |scrip| scrip.endpoint.eql?(target) }.first
 
-                if subscription_arn
-                  @snsClient.unsubscribe(subscription_arn: subscription_arn)
+                if found_sub
+                  @snsClient.unsubscribe(subscription_arn: found_sub.subscription_arn)
                   response = @snsClient.subscribe(topic_arn: ENV["sms_topic_arn"], protocol: "sms", endpoint: reformatted_number)
                   result = { subscription: response.subscription_arn, status: 201 }
                   break
