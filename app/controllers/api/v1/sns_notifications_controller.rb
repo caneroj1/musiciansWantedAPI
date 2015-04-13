@@ -20,18 +20,68 @@ class Api::V1::SnsNotificationsController < ApplicationController
     if /1-[0-9]{3}-[0-9]{3}-[0-9]{4}/.match(params[:cell])
       subscriber = User.find_by_id(params[:id])
       result = {}
-      begin
-        if subscriber.update(cell: reformat_number(params[:cell]))
-          response = @snsClient.subscribe(topic_arn: ENV["sms_topic_arn"], protocol: "sms", endpoint: params[:cell])
-          result = { subscription: response.subscription_arn, status: 201 }
-        else
-          result = subscriber.errors.messages.merge({ status: 422 })
+      if subscriber
+        begin
+          if subscriber.update(cell: reformat_number(params[:cell]))
+            response = @snsClient.subscribe(topic_arn: ENV["sms_topic_arn"], protocol: "sms", endpoint: params[:cell])
+            result = { subscription: response.subscription_arn, status: 201 }
+          else
+            result = subscriber.errors.messages.merge({ status: 422 })
+          end
+        rescue Aws::SNS::Errors::InvalidParameter => e
+          result = { errors: "we encountered a problem", status: 422 }
         end
-      rescue Aws::SNS::Errors::InvalidParameter => e
-        result = { errors: "we encountered a problem", status: 422}
+      else
+        result = { errors: "user does not exist", status: 422}
       end
     else
-      result = { errors: "invalid number", status: 422}
+      result = { errors: "invalid number", status: 422 }
+    end
+
+    status = result.delete(:status)
+    render json: result, status: status
+  end
+
+  ## POST
+  # this will change a user's subscription. it has to find the user's subscription in the list of subs
+  # maintained by amazon. it searches by the cell number. once it finds the subscription, it deletes it
+  # and then resubscribes the user with a different cell number
+  def resubscribe
+    if /1-[0-9]{3}-[0-9]{3}-[0-9]{4}/.match(params[:cell])
+      subscriber = User.find_by_id(params[:id])
+      result = {}
+
+      if subscriber
+        begin
+          target = subscriber.cell
+          puts target
+          reformatted_number = reformat_number(params[:cell])
+          if subscriber.update(cell: reformatted_number)
+            next_token = nil
+
+            loop do
+              @snsClient.list_subscriptions_by_topic(topic_arn: ENV["sms_topic_arn"], next_token: next_token).each do |sub|
+                subscription_arn = sub.subscriptions.select { |scrip| scrip.endpoint.eql?(target) }.first.subscription_arn
+
+                if subscription_arn
+                  @snsClient.unsubscribe(subscription_arn: subscription_arn)
+                  response = @snsClient.subscribe(topic_arn: ENV["sms_topic_arn"], protocol: "sms", endpoint: reformatted_number)
+                  result = { subscription: response.subscription_arn, status: 201 }
+                  break
+                end
+                next_token = sub.next_token
+              end
+              break unless next_token
+            end
+          else
+            result = subscriber.errors.messages.merge({ status: 422 })
+          end
+        end
+      else
+        result = { errors: "user does not exist", status: 422 }
+      end
+    else
+      result = { errors: "invalid number", status: 422 }
     end
 
     status = result.delete(:status)

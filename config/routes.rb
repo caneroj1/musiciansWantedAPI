@@ -35,6 +35,7 @@ Rails.application.routes.draw do
       post 'login', to: 'sessions#login', defaults: { format: :json }
       post 'subscribe', to: 'sns_notifications#subscribe', defaults: { format: :json }
       post 'publish', to: 'sns_notifications#publish', defaults: { format: :json }
+      post 'resubscribe', to: 'sns_notifications#resubscribe', defaults: { format: :json }
     end
   end
 end
