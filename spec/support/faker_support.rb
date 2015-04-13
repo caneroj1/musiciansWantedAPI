@@ -10,6 +10,10 @@ class FakerSupport
       "#{adjective} #{FFaker::Color.name.capitalize} #{event_type}"
     end
 
+    def description
+      "#{FFaker::HipsterIpsum.paragraph}"
+    end
+
     private
     def event_type
       %w{Hoedown She-bang Hootenanny Party Event Gala Ball Masquerade}.sample
