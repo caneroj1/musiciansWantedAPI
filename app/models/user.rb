@@ -7,7 +7,7 @@ class User < ActiveRecord::Base
 										uniqueness: true
 	validates :search_radius, numericality: { less_than_or_equal_to: 20, greater_than_or_equal_to: 5 }
 	validates :gender, inclusion: { in: ["male", "female", "none"], message: %q{needs to selected.} }
-	validates :cell, uniqueness: true
+	validates :cell, uniqueness: true, if: "!cell.blank?"
 
 	# perform custom validation on the age
 	validate :validate_age_on_create_or_update

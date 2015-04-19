@@ -8,7 +8,7 @@ FactoryGirl.define do
 
     factory :event_with_attendees do
       after(:create) do |event|
-        5.times { event.users << FactoryGirl.create(:user) }
+        5.times { event.users << FactoryGirl.create(:user, cell: "") }
       end
     end
   end
