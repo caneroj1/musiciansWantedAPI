@@ -29,5 +29,14 @@ FactoryGirl.define do
     factory :user_with_location do
       location { 'New York, NY' }
     end
+
+    factory :user_with_contacts do
+      after(:create) do |user|
+        5.times do
+          contact = FactoryGirl.create(:user, cell: "")
+          FactoryGirl.create(:contactship, user_id: user.id, contact_id: contact.id)
+        end
+      end
+    end
   end
 end

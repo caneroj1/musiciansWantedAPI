@@ -19,6 +19,10 @@ class User < ActiveRecord::Base
 	has_and_belongs_to_many :events
 	has_many :messages
 
+	# a user has many contacts, which are just other users
+	has_many :contactships
+	has_many :contacts, through: :contactships
+
 	# for location services
 	geocoded_by :location
 	after_validation :geocode

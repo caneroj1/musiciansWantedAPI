@@ -27,6 +27,8 @@ Rails.application.routes.draw do
         resources :replies, defaults: { format: :json }, only: [:index, :create, :destroy, :show]
       end
 
+      resources :contactships, defaults: { format: :json }, except: [:update, :edit, :new]
+
       get 'notifications', to: 'notifications#notifications', defaults: { format: :json }
       get 'sendEmail', to: 'ses_emails#sendEmail', defaults: { format: :html }
       post 's3upload', to: 's3_storages#s3upload', defaults: { format: :json }
