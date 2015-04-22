@@ -1,5 +1,5 @@
 class Event < ActiveRecord::Base
-  attr_accessible :title, :location, :description, :event_time, :created_by
+  attr_accessible :title, :location, :description, :event_time, :created_by, :has_event_pic
 
   validates :title, :location, :description, :event_time, :created_by, presence: true
 

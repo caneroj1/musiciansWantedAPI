@@ -11,11 +11,11 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150412213749) do
+ActiveRecord::Schema.define(version: 20150421210203) do
 
   create_table "events", force: :cascade do |t|
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+    t.datetime "created_at",                    null: false
+    t.datetime "updated_at",                    null: false
     t.datetime "event_time"
     t.string   "title"
     t.string   "location"
@@ -23,6 +23,7 @@ ActiveRecord::Schema.define(version: 20150412213749) do
     t.float    "latitude"
     t.float    "longitude"
     t.string   "description"
+    t.boolean  "has_event_pic", default: false
   end
 
   create_table "events_users", id: false, force: :cascade do |t|

@@ -29,8 +29,10 @@ Rails.application.routes.draw do
 
       get 'notifications', to: 'notifications#notifications', defaults: { format: :json }
       get 'sendEmail', to: 'ses_emails#sendEmail', defaults: { format: :html }
-      post 's3upload', to: 's3_storages#s3upload', defaults: { format: :json }
-      get 's3get', to: 's3_storages#s3get', defaults: { format: :json }
+      post 's3ProfilePictureUpload', to: 's3_storages#s3ProfilePictureUpload', defaults: { format: :json }
+      post 's3EventPictureUpload', to: 's3_storages#s3EventPictureUpload', defaults: { format: :json }
+      get 's3ProfileGet', to: 's3_storages#s3ProfileGet', defaults: { format: :json }
+      get 's3EventGet', to: 's3_storages#s3EventGet', defaults: { format: :json }
       get 'checkBounce', to: 'sns_notifications#checkBounce', defaults: { format: :html }
       post 'login', to: 'sessions#login', defaults: { format: :json }
       post 'subscribe', to: 'sns_notifications#subscribe', defaults: { format: :json }
