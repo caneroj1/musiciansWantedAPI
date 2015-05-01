@@ -10,6 +10,13 @@ class Api::V1::ContactshipsController < ApplicationController
     end
   end
 
+  ## GET
+  # returns true or false depending on if the user corresponding to :user_id
+  # has a contact by the id :contact_id
+  def knows
+    render json: { knows: User.find_by_id(params[:user_id]).try(:contactships).exists?(contact_id: params[:contact_id]) }
+  end
+
   ## POST
   # this will create the specified contactship. we add a new contactship
   # between the user and desired contact if it doesn't already exist
