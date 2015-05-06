@@ -30,7 +30,7 @@ class Api::V1::S3StoragesController < ApplicationController
     event = Event.find_by_id(params[:event_id])
     @s3Client.put_object(bucket: 'musicians-wanted-pics', key: "#{params[:events_id]}_event_pic.jpg", body: decodedImage)
 
-    event.has_profile_pic = true
+    event.has_event_pic = true
     event.save
 
     render json: { info: "picture upload was successful", }, status: 202
