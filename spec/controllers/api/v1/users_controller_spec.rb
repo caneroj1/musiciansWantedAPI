@@ -20,7 +20,7 @@ RSpec.describe Api::V1::UsersController do
       before(:each) do
         sleep 1
         @user = FactoryGirl.create(:user_with_location)
-        FactoryGirl.create(:user, location: "Bronx, NY, USA")
+        FactoryGirl.create(:user, location: "Bronx, NY, USA", cell: ENV["rspec_cell2"])
         get :near_me, { id: @user.id }, format: :json
       end
 
@@ -45,7 +45,7 @@ RSpec.describe Api::V1::UsersController do
       before(:each) do
         sleep 1
         @user = FactoryGirl.create(:user_with_location)
-        FactoryGirl.create(:user, location: "Bronx, NY, USA")
+        FactoryGirl.create(:user, location: "Bronx, NY, USA", cell: ENV["rspec_cell2"])
         get :near_me, { id: -1 }, format: :json
       end
 
@@ -67,7 +67,7 @@ RSpec.describe Api::V1::UsersController do
     context 'with existing user' do
       before(:each) do
         sleep 1
-        @user = FactoryGirl.create(:user_with_location)
+        @user = FactoryGirl.create(:user_with_location, cell: ENV["rspec_cell2"])
         FactoryGirl.create(:event, location: @user.location)
         get :events_near_me, { id: @user.id }, format: :json
       end

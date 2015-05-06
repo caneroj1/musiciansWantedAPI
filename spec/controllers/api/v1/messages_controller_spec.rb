@@ -40,7 +40,7 @@ RSpec.describe Api::V1::MessagesController, type: :controller do
     context "when successfully created" do
       before(:each) do
         @sender = FactoryGirl.create(:user)
-        @receiver = FactoryGirl.create(:user)
+        @receiver = FactoryGirl.create(:user, cell: ENV["rspec_cell2"])
         @message_attributes = FactoryGirl.attributes_for :message, sent_by: @sender.id, user_id: @receiver.id
         @count = @receiver.messages.count
         post :create, { message: @message_attributes }, format: :json
@@ -68,7 +68,7 @@ RSpec.describe Api::V1::MessagesController, type: :controller do
     context "invalid message attributes" do
       before(:each) do
         @sender = FactoryGirl.create(:user)
-        @receiver = FactoryGirl.create(:user)
+        @receiver = FactoryGirl.create(:user, cell: ENV["rspec_cell2"])
         @message_attributes = FactoryGirl.attributes_for :message, subject: nil, sent_by: @sender.id, user_id: @receiver.id
         post :create, { message: @message_attributes }, format: :json
       end

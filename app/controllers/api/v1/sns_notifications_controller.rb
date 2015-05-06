@@ -26,7 +26,7 @@ class Api::V1::SnsNotificationsController < ApplicationController
             response = @snsClient.subscribe(topic_arn: ENV["sms_topic_arn"], protocol: "sms", endpoint: params[:cell])
             result = { subscription: response.subscription_arn, status: 201 }
           else
-            result = subscriber.errors.messages.merge({ status: 422 })
+            result = { errors: subscriber.errors.messages, status: 422 }
           end
         rescue Aws::SNS::Errors::InvalidParameter => e
           result = { errors: "we encountered a problem", status: 422 }
@@ -58,7 +58,7 @@ class Api::V1::SnsNotificationsController < ApplicationController
           reformatted_number = reformat_number(params[:cell])
           if subscriber.update(cell: reformatted_number)
             next_token = nil
-
+            found = false
             loop do
               @snsClient.list_subscriptions_by_topic(topic_arn: ENV["sms_topic_arn"], next_token: next_token).each do |sub|
                 found_sub = sub.subscriptions.select { |scrip| scrip.endpoint.eql?(target) }.first
@@ -67,14 +67,19 @@ class Api::V1::SnsNotificationsController < ApplicationController
                   @snsClient.unsubscribe(subscription_arn: found_sub.subscription_arn)
                   response = @snsClient.subscribe(topic_arn: ENV["sms_topic_arn"], protocol: "sms", endpoint: reformatted_number)
                   result = { subscription: response.subscription_arn, status: 201 }
+                  found = true
                   break
                 end
                 next_token = sub.next_token
               end
               break unless next_token
             end
+            if !found
+              response = @snsClient.subscribe(topic_arn: ENV["sms_topic_arn"], protocol: "sms", endpoint: reformatted_number)
+              result = { subscription: response.subscription_arn, status: 201 }
+            end
           else
-            result = subscriber.errors.messages.merge({ status: 422 })
+            result = { errors: subscriber.errors.messages, status: 422 }
           end
         end
       else

@@ -7,7 +7,7 @@ class User < ActiveRecord::Base
 										uniqueness: true
 	validates :search_radius, numericality: { less_than_or_equal_to: 20, greater_than_or_equal_to: 5 }
 	validates :gender, inclusion: { in: ["male", "female", "none"], message: %q{needs to selected.} }
-	validates :cell, uniqueness: true
+	validates :cell, uniqueness: true, if: "!cell.blank?"
 
 	# perform custom validation on the age
 	validate :validate_age_on_create_or_update
@@ -18,6 +18,10 @@ class User < ActiveRecord::Base
 	# a user can have many events and they can also belong to many events
 	has_and_belongs_to_many :events
 	has_many :messages
+
+	# a user has many contacts, which are just other users
+	has_many :contactships
+	has_many :contacts, through: :contactships
 
 	# for location services
 	geocoded_by :location
