@@ -30,8 +30,8 @@ class Api::V1::UsersController < ApplicationController
 		new_user = User.new(params[:user])
 		if new_user.save
 			render json: new_user, status: 201, location: [:api, new_user]
-			# loadSESClientCreation
-			# creationEmail(new_user.email)
+			loadSESClientCreation
+			creationEmail(new_user.email)
 
 		else
 			render json: { errors: new_user.errors }, status: 422
