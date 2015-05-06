@@ -21,8 +21,8 @@ ActiveRecord::Schema.define(version: 20150421214328) do
   end
 
   create_table "events", force: :cascade do |t|
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+    t.datetime "created_at",                    null: false
+    t.datetime "updated_at",                    null: false
     t.datetime "event_time"
     t.string   "title"
     t.string   "location"
@@ -30,6 +30,7 @@ ActiveRecord::Schema.define(version: 20150421214328) do
     t.float    "latitude"
     t.float    "longitude"
     t.string   "description"
+    t.boolean  "has_event_pic", default: false
   end
 
   create_table "events_users", id: false, force: :cascade do |t|

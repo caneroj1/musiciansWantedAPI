@@ -24,8 +24,9 @@ class Api::V1::EventsController < ApplicationController
     user = User.find_by_id(new_event.created_by)
 
     if !user.nil? && new_event.valid?
-      new_event.users << user
+      #new_event.users << user
       new_event.save
+      
       render json: new_event, status: 201, location: [:api, new_event]
     else
       errors = user.nil? ? "there was a problem creating this event" : new_event.errors
