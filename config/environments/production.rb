@@ -76,8 +76,4 @@ Rails.application.configure do
 
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
-
-  Geocoder.configure(api_key:   ENV["google_api_key"],
-                     use_https: true,
-                     timeout:   6)
 end
