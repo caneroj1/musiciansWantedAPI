@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150421214328) do
+ActiveRecord::Schema.define(version: 20150515214603) do
 
   create_table "contactships", force: :cascade do |t|
     t.integer  "user_id"
@@ -84,6 +84,8 @@ ActiveRecord::Schema.define(version: 20150421214328) do
     t.integer  "search_radius",    default: 10
     t.string   "gender",           default: "none"
     t.string   "cell",             default: ""
+    t.string   "genre",            default: ""
+    t.string   "instrument",       default: ""
   end
 
   add_index "users", ["cell"], name: "index_users_on_cell"
