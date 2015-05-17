@@ -6,6 +6,7 @@ Rails.application.routes.draw do
   namespace :api, defaults: { format: :json } do
     scope module: :v1, constraints: ApiConstraints.new(version: 1, default: true) do
       resources :users, defaults: { format: :json }, except: [:edit, :new] do
+        resources :musician_requests, only: [:create]
         member do
           get 'events', to: 'users#get_events'
           get 'messages', to: 'users#get_messages'

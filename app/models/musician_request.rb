@@ -5,6 +5,8 @@ class MusicianRequest < ActiveRecord::Base
 
   after_create :create_notification
 
+  validates :poster, :instrument, presence: true
+
   def create_notification
     Notification.create(title: "#{poster} is looking for a #{instrument}",
                         notification_type: 2,
