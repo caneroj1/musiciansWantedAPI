@@ -14,6 +14,14 @@ class FakerSupport
       "#{FFaker::HipsterIpsum.paragraph}"
     end
 
+    def instrument
+      instruments.sample
+    end
+
+    def request_notification
+      "#{FFaker::Name.name} is looking for a #{instrument}"
+    end
+
     private
     def event_type
       %w{Hoedown She-bang Hootenanny Party Event Gala Ball Masquerade}.sample
@@ -22,6 +30,10 @@ class FakerSupport
     def adjective
       %w{Amazing Ridiculous Super Fun Extravagant Exquisite Dashing Baller
          Enlightening Lively Sweet}.sample
+    end
+
+    def instruments
+      %w{drummer guitarist bassist vocalist pianist keyboardist percussionist }
     end
   end
 end

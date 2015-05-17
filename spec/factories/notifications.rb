@@ -14,5 +14,10 @@ FactoryGirl.define do
       title              { FFaker::Name.name }
       notification_type  { 1 }
     end
+
+    factory :musician_request_notification do
+      title               { FakerSupport.request_notification }
+      notification_type   { 2 }
+    end
   end
 end

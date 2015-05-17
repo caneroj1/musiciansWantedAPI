@@ -11,8 +11,10 @@ class Notification < ActiveRecord::Base
     self.title =
     if notification_type.eql?(0)
       "Event: #{self.title} was created."
-    else
+    elsif notification_type.eql?(1)
       "#{self.title} created an account."
+    else
+      "#{self.title}"
     end
   end
 end
