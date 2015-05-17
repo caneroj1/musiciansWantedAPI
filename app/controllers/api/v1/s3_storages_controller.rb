@@ -28,7 +28,7 @@ class Api::V1::S3StoragesController < ApplicationController
     decodedImage = Base64.decode64(params[:image])
 
     event = Event.find_by_id(params[:event_id])
-    @s3Client.put_object(bucket: 'musicians-wanted-pics', key: "#{params[:events_id]}_event_pic.jpg", body: decodedImage)
+    @s3Client.put_object(bucket: 'musicians-wanted-pics', key: "#{params[:event_id]}_event_pic.jpg", body: decodedImage)
 
     event.has_event_pic = true
     event.save
@@ -53,7 +53,7 @@ class Api::V1::S3StoragesController < ApplicationController
     event = Event.find_by_id(params[:event_id])
     response = nil
 
-    if event.has_profile_pic
+    if event.has_event_pic
       s3_response = @s3Client.get_object(bucket: 'musicians-wanted-pics', key: "#{params[:event_id]}_event_pic.jpg")
       response_body = s3_response.data.body.read
       response = Base64.encode64(response_body)

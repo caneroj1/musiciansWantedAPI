@@ -95,6 +95,8 @@ ActiveRecord::Schema.define(version: 20150517182626) do
     t.integer  "search_radius",    default: 10
     t.string   "gender",           default: "none"
     t.string   "cell",             default: ""
+    t.string   "genre",            default: ""
+    t.string   "instrument",       default: ""
   end
 
   add_index "users", ["cell"], name: "index_users_on_cell"
