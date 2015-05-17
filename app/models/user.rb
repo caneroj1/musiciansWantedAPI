@@ -23,6 +23,9 @@ class User < ActiveRecord::Base
 	has_many :contactships
 	has_many :contacts, through: :contactships
 
+	# a user has many requests for musicians
+	has_many :musician_requests
+
 	# for location services
 	geocoded_by :location
 	after_validation :geocode

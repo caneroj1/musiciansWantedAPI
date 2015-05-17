@@ -47,12 +47,27 @@ RSpec.describe Notification, type: :model do
     end
   end
 
+  context 'request notification type' do
+    before(:each) do
+      @attributes = FactoryGirl.attributes_for(:musician_request)
+      @request_notification = FactoryGirl.create(:musician_request_notification, title: "#{@attributes[:poster]} is looking for a #{@attributes[:instrument]}")
+    end
+
+    it 'has a proper title' do
+      expect(@request_notification.title).to eq("#{@attributes[:poster]} is looking for a #{@attributes[:instrument]}")
+    end
+
+    it 'has the correct type' do
+      expect(@request_notification.notification_type).to eq(2)
+    end
+  end
+
   context 'creation' do
     it 'is created when a new user is created' do
       expect { FactoryGirl.create(:user) }.to change(Notification, :count).by 1
     end
 
-    it 'has the id of the user for it notifies creation' do
+    it 'has the id of the user for which it notifies creation' do
       user = FactoryGirl.create(:user)
       expect(Notification.last.record_id).to eq(user.id)
     end
@@ -66,6 +81,17 @@ RSpec.describe Notification, type: :model do
       sleep(1)
       event = FactoryGirl.create(:event)
       expect(Notification.last.record_id).to eq(event.id)
+    end
+
+    it 'is created when a new musician request is created' do
+      expect { FactoryGirl.create(:musician_request) }.to change(Notification, :count).by 1
+    end
+
+    it 'has the id of the user that created the request' do
+      sleep(1)
+      id = FactoryGirl.create(:user).id
+      r = FactoryGirl.create(:musician_request, user_id: id)
+      expect(Notification.last.record_id).to eq(id)
     end
   end
 end
