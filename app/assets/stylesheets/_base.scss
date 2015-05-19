@@ -1,0 +1,17 @@
+$brand-primary: rgb(255, 90, 0);
+
+.heading {
+  color: $brand-primary;
+}
+
+h2,
+h3,
+h4,
+h5,
+p,
+td,
+a,
+tr,
+th {
+  font-weight: 200 !important;
+}
