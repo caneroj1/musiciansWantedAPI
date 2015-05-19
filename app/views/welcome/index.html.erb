@@ -1,1 +1,259 @@
-<h1 style="text-align: center; color: orange;">Check out the Musicians Wanted mobile application MW on the Apple App Store!</h1>
+<h1 class=".col-md-1" style="text-align: center; color: orange;">Check out the Musicians Wanted mobile application MW on the Apple App Store!</h1>
+<br>
+<div>
+  <h3 class=".col-md-1" style="text-align: left; color: black;">Below is the table for the RESTful Musicians Wanted API and making requests. All POST requests should be submitted as JSON and responses are returned as JSON.</h3>
+  <p class=".col-md-1" style="text-align: left; color: black;">
+    If you have any problems or questions with documentation please create an issue on the GitHub repo at https://github.com/caneroj1/team-ios.
+  </p>
+</div>
+
+<div>
+  <table class=".col-md-1" style="width: 100%" border=1 frame=void>
+  <tr>
+  	<th>Prefix</th>
+  	<th>Verb</th>
+  	<th>URI Pattern</th>
+  	<th>Description</th>
+  </tr>
+  <tr>
+  	<td>root</td>
+  	<td>Get</td>
+  	<td>/</td>
+  	<td>Holds the MW API documentation.</td>
+  </tr>
+  <tr>
+  	<td>api_user_musician_requests</td>
+  	<td>POST</td>
+  	<td>/api/users/:user_id/musician_requests(.:format)</td>
+  	<td>help</td>
+  </tr>
+  <tr>
+  	<td>events_api_user</td>
+  	<td>GET</td>
+  	<td>/api/users/:id/events(.:format) </td>
+  	<td>67</td>
+  </tr>
+  <tr>
+  	<td>messages_api_user</td>
+  	<td>GET</td>
+  	<td>/api/users/:id/messages(.:format)</td>
+  	<td>50</td>
+  </tr>
+  <tr>
+  	<td>sent_messages_api_user</td>
+  	<td>Get</td>
+  	<td>/api/users/:id/sent_messages(.:format)</td>
+  	<td>Holds the MW API documentation.</td>
+  </tr>
+  <tr>
+  	<td>near_me_api_user</td>
+  	<td>GET</td>
+  	<td>/api/users/:id/near_me(.:format)</td>
+  	<td>help</td>
+  </tr>
+  <tr>
+  	<td>events_near_me_api_user</td>
+  	<td>GET</td>
+  	<td>/api/users/:id/events_near_me(.:format)</td>
+  	<td>67</td>
+  </tr>
+  <tr>
+  	<td>api_users</td>
+  	<td>GET</td>
+  	<td>/api/users(.:format)</td>
+  	<td>50</td>
+  </tr>
+  <tr>
+  	<td>N/A</td>
+  	<td>POST</td>
+  	<td>/api/users(.:format)</td>
+  	<td>Holds the MW API documentation.</td>
+  </tr>
+  <tr>
+  	<td>api_user</td>
+  	<td>GET</td>
+  	<td>/api/users/:id(.:format)</td>
+  	<td>help</td>
+  </tr>
+  <tr>
+  	<td>N/A</td>
+  	<td>PATCH</td>
+  	<td>/api/users/:id(.:format)</td>
+  	<td>67</td>
+  </tr>
+  <tr>
+  	<td>N/A</td>
+  	<td>PUT</td>
+  	<td>/api/users/:id(.:format)</td>
+  	<td>50</td>
+  </tr>
+  <tr>
+  	<td>N/A</td>
+  	<td>DELETE</td>
+  	<td>/api/users/:id(.:format)</td>
+  	<td>Holds the MW API documentation.</td>
+  </tr>
+  <tr>
+  	<td>creator_api_event</td>
+  	<td>GET</td>
+  	<td>/api/events/:id/creator(.:format)</td>
+  	<td>help</td>
+  </tr>
+  <tr>
+  	<td>attendees_api_event</td>
+  	<td>GET</td>
+  	<td>/api/events/:id/attendees(.:format)</td>
+  	<td>67</td>
+  </tr>
+  <tr>
+  	<td>attend_api_event</td>
+  	<td>POST</td>
+  	<td>/api/events/:id/attend(.:format)</td>
+  	<td>50</td>
+  </tr>
+  <tr>
+  	<td>api_events</td>
+  	<td>GET</td>
+  	<td>/api/events(.:format)</td>
+  	<td>Holds the MW API documentation.</td>
+  </tr>
+  <tr>
+  	<td>N/A</td>
+  	<td>POST</td>
+  	<td>/api/events(.:format)</td>
+  	<td>help</td>
+  </tr>
+  <tr>
+  	<td>api_event</td>
+  	<td>GET</td>
+  	<td>/api/events/:id(.:format)</td>
+  	<td>67</td>
+  </tr>
+  <tr>
+  	<td>N/A</td>
+  	<td>PATCH</td>
+  	<td>/api/events/:id(.:format)</td>
+  	<td>50</td>
+  </tr>
+  <tr>
+  	<td>N/A</td>
+  	<td>PUT</td>
+  	<td>/api/events/:id(.:format) </td>
+  	<td>Holds the MW API documentation.</td>
+  </tr>
+  <tr>
+  	<td>N/A</td>
+  	<td>DELETE</td>
+  	<td>/api/events/:id(.:format)</td>
+  	<td>help</td>
+  </tr>
+  <tr>
+  	<td>events_api_user</td>
+  	<td>GET</td>
+  	<td>/api/users/:id/events(.:format) </td>
+  	<td>67</td>
+  </tr>
+  <tr>
+  	<td>api_message_replies</td>
+  	<td>GET</td>
+  	<td>/api/messages/:message_id/replies(.:format)</td>
+  	<td>50</td>
+  </tr>
+  <tr>
+  	<td>N/A</td>
+  	<td>POST</td>
+  	<td>/api/messages/:message_id/replies(.:format)</td>
+  	<td>Holds the MW API documentation.</td>
+  </tr>
+  <tr>
+  	<td>api_message_reply</td>
+  	<td>GET</td>
+  	<td>/api/messages/:message_id/replies/:id(.:format)</td>
+  	<td>help</td>
+  </tr>
+  <tr>
+  	<td>N/A</td>
+  	<td>DELETE</td>
+  	<td>/api/messages/:message_id/replies/:id(.:format)</td>
+  	<td>67</td>
+  </tr>
+  <tr>
+  	<td>api_messages</td>
+  	<td>POST</td>
+  	<td>/api/messages(.:format)</td>
+  	<td>50</td>
+  </tr>
+  <tr>
+  	<td>api_message</td>
+  	<td>GET</td>
+  	<td>/api/messages/:id(.:format)</td>
+  	<td>Holds the MW API documentation.</td>
+  </tr>
+  <tr>
+  	<td>N/A</td>
+  	<td>DELETE</td>
+  	<td>/api/messages/:id(.:format)</td>
+  	<td>help</td>
+  </tr>
+  <tr>
+  	<td>api_contactships</td>
+  	<td>POST</td>
+  	<td>/api/contactships(.:format)</td>
+  	<td>67</td>
+  </tr>
+  <tr>
+  	<td>api</td>
+  	<td>GET</td>
+  	<td>Smith</td>
+  	<td>50</td>
+  </tr>
+  <tr>
+  	<td>root</td>
+  	<td>Get</td>
+  	<td>/</td>
+  	<td>Holds the MW API documentation.</td>
+  </tr>
+  <tr>
+  	<td>api_user_musician_requests</td>
+  	<td>POST</td>
+  	<td>/api/users/:user_id/musician_requests(.:format)</td>
+  	<td>help</td>
+  </tr>
+  <tr>
+  	<td>events_api_user</td>
+  	<td>GET</td>
+  	<td>/api/users/:id/events(.:format) </td>
+  	<td>67</td>
+  </tr>
+  <tr>
+  	<td>4</td>
+  	<td>Jill</td>
+  	<td>Smith</td>
+  	<td>50</td>
+  </tr>
+  <tr>
+  	<td>root</td>
+  	<td>Get</td>
+  	<td>/</td>
+  	<td>Holds the MW API documentation.</td>
+  </tr>
+  <tr>
+  	<td>api_user_musician_requests</td>
+  	<td>POST</td>
+  	<td>/api/users/:user_id/musician_requests(.:format)</td>
+  	<td>help</td>
+  </tr>
+  <tr>
+  	<td>events_api_user</td>
+  	<td>GET</td>
+  	<td>/api/users/:id/events(.:format) </td>
+  	<td>67</td>
+  </tr>
+  <tr>
+  	<td>4</td>
+  	<td>Jill</td>
+  	<td>Smith</td>
+  	<td>50</td>
+  </tr>
+  </table>
+</div>

@@ -37,6 +37,9 @@ GEM
       thread_safe (~> 0.3, >= 0.3.4)
       tzinfo (~> 1.1)
     arel (6.0.0)
+    autoprefixer-rails (5.1.11)
+      execjs
+      json
     aws-sdk (2.0.43)
       aws-sdk-resources (= 2.0.43)
     aws-sdk-core (2.0.43)
@@ -51,6 +54,9 @@ GEM
       rack (>= 0.9.0)
     binding_of_caller (0.7.2)
       debug_inspector (>= 0.0.1)
+    bootstrap-sass (3.3.4.1)
+      autoprefixer-rails (>= 5.0.0.1)
+      sass (>= 3.2.19)
     builder (3.2.2)
     byebug (4.0.5)
       columnize (= 0.9.0)
@@ -227,6 +233,7 @@ PLATFORMS
 DEPENDENCIES
   aws-sdk
   better_errors
+  bootstrap-sass (~> 3.3.4)
   byebug
   capistrano-rails
   coffee-rails (~> 4.1.0)
