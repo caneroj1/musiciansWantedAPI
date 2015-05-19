@@ -8,7 +8,7 @@
 </div>
 
 <div>
-  <table class=".col-md-1" style="width: 100%" border=1 frame=void>
+  <table class="col-md-1 table table-bordered table-hover">
   <tr>
   	<th>Prefix</th>
   	<th>Verb</th>
@@ -253,7 +253,7 @@
   	<td>api_subscribe</td>
   	<td>POST</td>
   	<td>/api/subscribe(.:format)</td>
-  	<td>Cubscribes the cell number to our AWS SNS notifications topic. Performs validation to see if the phone number is in this format: 1-xxx-xxx-xxxx. Also, the cell must be unique, and if the subscriber cannot update their cell number, then we return with an error. This route should ONLY be used when the user is creating their first subscription.</td>
+  	<td>Subscribes the cell number to our AWS SNS notifications topic. Performs validation to see if the phone number is in this format: 1-xxx-xxx-xxxx. Also, the cell must be unique, and if the subscriber cannot update their cell number, then we return with an error. This route should ONLY be used when the user is creating their first subscription.</td>
   </tr>
   <tr>
   	<td>api_publish</td>
