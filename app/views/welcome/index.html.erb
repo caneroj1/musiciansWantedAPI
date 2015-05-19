@@ -204,55 +204,73 @@
   <tr>
   	<td>api</td>
   	<td>GET</td>
-  	<td>Smith</td>
+  	<td>/api/contactships/contacts/:user_id(.:format)</td>
   	<td>50</td>
   </tr>
   <tr>
-  	<td>root</td>
-  	<td>Get</td>
-  	<td>/</td>
-  	<td>Holds the MW API documentation.</td>
-  </tr>
-  <tr>
-  	<td>api_user_musician_requests</td>
-  	<td>POST</td>
-  	<td>/api/users/:user_id/musician_requests(.:format)</td>
-  	<td>help</td>
-  </tr>
-  <tr>
-  	<td>events_api_user</td>
+  	<td>N/A</td>
   	<td>GET</td>
-  	<td>/api/users/:id/events(.:format) </td>
-  	<td>67</td>
-  </tr>
-  <tr>
-  	<td>4</td>
-  	<td>Jill</td>
-  	<td>Smith</td>
+  	<td>/api/contactships/contacts/:user_id/remove/:contact_id(.:format)</td>
   	<td>50</td>
   </tr>
   <tr>
-  	<td>root</td>
-  	<td>Get</td>
-  	<td>/</td>
+  	<td>N/A</td>
+  	<td>GET</td>
+  	<td>/api/contactships/contacts/:user_id/knows/:contact_id(.:format)</td>
+  	<td>50</td>
+  </tr>
+  <tr>
+  	<td>api_notifications</td>
+  	<td>GET</td>
+  	<td>/api/notifications(.:format)</td>
+  	<td>50</td>
+  </tr>
+  <tr>
+  	<td>api_s3ProfilePictureUpload</td>
+  	<td>POST</td>
+  	<td>/api/s3ProfilePictureUpload(.:format)</td>
   	<td>Holds the MW API documentation.</td>
   </tr>
   <tr>
-  	<td>api_user_musician_requests</td>
+  	<td>api_s3EventPictureUpload</td>
   	<td>POST</td>
-  	<td>/api/users/:user_id/musician_requests(.:format)</td>
+  	<td>/api/s3EventPictureUpload(.:format)</td>
   	<td>help</td>
   </tr>
   <tr>
-  	<td>events_api_user</td>
+  	<td>api_s3ProfileGet</td>
   	<td>GET</td>
-  	<td>/api/users/:id/events(.:format) </td>
+  	<td>/api/s3ProfileGet(.:format)</td>
   	<td>67</td>
   </tr>
   <tr>
-  	<td>4</td>
-  	<td>Jill</td>
-  	<td>Smith</td>
+  	<td>api_s3EventGet</td>
+  	<td>GET</td>
+  	<td>/api/s3EventGet(.:format)</td>
+  	<td>50</td>
+  </tr>
+  <tr>
+  	<td>api_login</td>
+  	<td>POST</td>
+  	<td>/api/login(.:format)</td>
+  	<td>Holds the MW API documentation.</td>
+  </tr>
+  <tr>
+  	<td>api_subscribe</td>
+  	<td>POST</td>
+  	<td>/api/subscribe(.:format)</td>
+  	<td>help</td>
+  </tr>
+  <tr>
+  	<td>api_publish</td>
+  	<td>POST</td>
+  	<td>/api/publish(.:format)</td>
+  	<td>67</td>
+  </tr>
+  <tr>
+  	<td>api_resubscribe</td>
+  	<td>POST</td>
+  	<td>/api/resubscribe(.:format)</td>
   	<td>50</td>
   </tr>
   </table>
