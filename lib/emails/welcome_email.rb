@@ -18,14 +18,14 @@ class Emails::WelcomeEmail
 
       #Used to send email
       @client.send_email(
-      source: mwEmail,
-      destination: {
-        to_addresses: [email]
-      },
-      message: message_attributes,
-      reply_to_addresses: ["musicianswanted@do-not-reply.com"],
-      return_path: mwEmail,
-    )
+        source: mwEmail,
+        destination: {
+          to_addresses: [email]
+        },
+        message: message_attributes,
+        reply_to_addresses: ["musicianswanted@do-not-reply.com"],
+        return_path: mwEmail
+      )
     end
 
     def message_attributes
