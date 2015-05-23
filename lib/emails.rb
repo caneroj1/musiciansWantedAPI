@@ -1,2 +1,2 @@
-module Emails
+class Emails
 end
