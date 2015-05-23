@@ -5,6 +5,9 @@ Rails.application.routes.draw do
 
   namespace :api, defaults: { format: :json } do
     scope module: :v1, constraints: ApiConstraints.new(version: 1, default: true) do
+      post 'login', to: 'sessions#login', defaults: { format: :json }
+      get 'notifications', to: 'notifications#notifications', defaults: { format: :json }
+      
       resources :users, defaults: { format: :json }, except: [:edit, :new] do
         resources :musician_requests, only: [:create]
         member do
@@ -33,12 +36,10 @@ Rails.application.routes.draw do
       get 'contactships/contacts/:user_id/remove/:contact_id', to: 'contactships#destroy'
       get 'contactships/contacts/:user_id/knows/:contact_id', to: 'contactships#knows'
 
-      get 'notifications', to: 'notifications#notifications', defaults: { format: :json }
       post 's3ProfilePictureUpload', to: 's3_storages#s3ProfilePictureUpload', defaults: { format: :json }
       post 's3EventPictureUpload', to: 's3_storages#s3EventPictureUpload', defaults: { format: :json }
       get 's3ProfileGet', to: 's3_storages#s3ProfileGet', defaults: { format: :json }
       get 's3EventGet', to: 's3_storages#s3EventGet', defaults: { format: :json }
-      post 'login', to: 'sessions#login', defaults: { format: :json }
       post 'subscribe', to: 'sns_notifications#subscribe', defaults: { format: :json }
       post 'publish', to: 'sns_notifications#publish', defaults: { format: :json }
       post 'resubscribe', to: 'sns_notifications#resubscribe', defaults: { format: :json }

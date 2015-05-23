@@ -30,7 +30,7 @@ class Api::V1::UsersController < ApplicationController
 		new_user = User.new(params[:user])
 		if new_user.save
 			render json: new_user, status: 201, location: [:api, new_user]
-
+			Emails::WelcomeEmail.send(params[:user][:email])
 		else
 			render json: { errors: new_user.errors }, status: 422
 		end
@@ -128,6 +128,4 @@ class Api::V1::UsersController < ApplicationController
 			render json: { errors: "that user does not exist" }, status: 422
 		end
 	end
-
-
 end

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150517182626) do
+ActiveRecord::Schema.define(version: 20150522233937) do
 
   create_table "contactships", force: :cascade do |t|
     t.integer  "user_id"
@@ -82,23 +82,35 @@ ActiveRecord::Schema.define(version: 20150517182626) do
 
   create_table "users", force: :cascade do |t|
     t.string   "name"
-    t.datetime "created_at",                        null: false
-    t.datetime "updated_at",                        null: false
+    t.datetime "created_at",                              null: false
+    t.datetime "updated_at",                              null: false
     t.string   "email"
     t.integer  "age"
     t.string   "location"
-    t.boolean  "looking_for_band", default: false
-    t.boolean  "looking_to_jam",   default: false
-    t.boolean  "has_profile_pic",  default: false
+    t.boolean  "looking_for_band",       default: false
+    t.boolean  "looking_to_jam",         default: false
+    t.boolean  "has_profile_pic",        default: false
     t.float    "latitude"
     t.float    "longitude"
-    t.integer  "search_radius",    default: 10
-    t.string   "gender",           default: "none"
-    t.string   "cell",             default: ""
-    t.string   "genre",            default: ""
-    t.string   "instrument",       default: ""
+    t.integer  "search_radius",          default: 10
+    t.string   "gender",                 default: "none"
+    t.string   "cell",                   default: ""
+    t.string   "genre",                  default: ""
+    t.string   "instrument",             default: ""
+    t.string   "encrypted_password",     default: "",     null: false
+    t.string   "reset_password_token"
+    t.datetime "reset_password_sent_at"
+    t.datetime "remember_created_at"
+    t.integer  "sign_in_count",          default: 0,      null: false
+    t.datetime "current_sign_in_at"
+    t.datetime "last_sign_in_at"
+    t.string   "current_sign_in_ip"
+    t.string   "last_sign_in_ip"
+    t.string   "password_digest"
   end
 
   add_index "users", ["cell"], name: "index_users_on_cell"
+  add_index "users", ["email"], name: "index_users_on_email", unique: true
+  add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
 
 end

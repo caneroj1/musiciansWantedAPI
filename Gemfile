@@ -42,9 +42,6 @@ gem 'aws-sdk'
 # accessible by protected, making it instance variable
 gem 'protected_attributes'
 
-# soundcloud api for ruby
-gem 'soundcloud'
-
 # for location services
 gem 'geocoder'
 
@@ -55,7 +52,7 @@ gem 'pg', group: :production
 gem 'capistrano-rails', group: :development
 
 # Use ActiveModel has_secure_password
-# gem 'bcrypt', '~> 3.1.7'
+gem 'bcrypt', '~> 3.1.7'
 
 # Use Unicorn as the app server
 # gem 'unicorn'
