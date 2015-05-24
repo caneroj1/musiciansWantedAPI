@@ -9,6 +9,10 @@ RSpec.describe Api::V1::SnsNotificationsController, type: :controller do
         post :subscribe, { cell: ENV["test_cell"], id: @user.id }, format: :json
       end
 
+      after(:each) do
+        User.where("cell = ?", ENV["rspec_cell"]).first.delete
+      end
+
       it 'should have an error' do
         expect(json_response).to have_key(:errors)
       end

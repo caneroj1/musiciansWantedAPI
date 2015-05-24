@@ -125,12 +125,16 @@ RSpec.describe User do
     end
 
     it 'can have a cell number' do
-      expect(user.cell).to eq(ENV["rspec_cell"])
+      expect(FactoryGirl.create(:user, cell: ENV["rspec_cell"]).cell).to eq(ENV["rspec_cell"])
     end
 
     context 'cell validation' do
       before(:each) do
         FactoryGirl.create(:user, cell: ENV["rspec_cell"])
+      end
+
+      after(:each) do
+        User.where("cell = ?", ENV["rspec_cell"]).first.delete
       end
 
       it 'must be of the form 1xxxxxxxxxx' do

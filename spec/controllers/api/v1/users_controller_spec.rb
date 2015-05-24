@@ -15,6 +15,49 @@ RSpec.describe Api::V1::UsersController do
     end
   end
 
+  describe 'GET #attending' do
+    context 'successful GET' do
+      before(:each) do
+        @user = FactoryGirl.create(:user_attending_events)
+        get :attending, { id: @user.id }, format: :json
+      end
+
+      it 'should respond with 200' do
+        expect(response.status).to eq(200)
+      end
+
+      it 'should respond with an array' do
+        expect(json_response.class).to eq(Array)
+      end
+
+      it 'should be an array of hashes' do
+        expect(json_response.first.class).to eq(Hash)
+      end
+
+      it 'should contain event information' do
+        expect(json_response.first).to have_key(:title)
+      end
+    end
+
+    context 'unsuccessful GET' do
+      before(:each) do
+        get :attending, { id: -1 }, format: :json
+      end
+
+      it 'should respond with 422' do
+        expect(response.status).to eq(422)
+      end
+
+      it 'should have an errors key' do
+        expect(json_response).to have_key(:errors)
+      end
+
+      it 'should say what went wrong' do
+        expect(json_response[:errors]).to include("user not found")
+      end
+    end
+  end
+
   describe 'GET #near_me' do
     context 'with existing user' do
       before(:each) do
@@ -255,13 +298,11 @@ RSpec.describe Api::V1::UsersController do
       end
 
       it 'should return all of the user\'s events' do
-        user_response = json_response
-        expect(user_response.count).to eq(@event_count)
+        expect(json_response.count).to eq(@event_count)
       end
 
       it 'should return them in json hash format' do
-        user_response = json_response
-        expect(user_response[0][:title]).to_not be_blank
+        expect(json_response.first[:title]).to_not be_blank
       end
 
       it 'should respond with 200' do
@@ -274,18 +315,16 @@ RSpec.describe Api::V1::UsersController do
         get :get_events, { id: -1 }, format: :json
       end
 
-      it 'should return an errors json indicating there was a problem' do
-        user_response = json_response
-        expect(user_response).to have_key(:errors)
+      it 'should respond with 200' do
+        expect(response.status).to eq(200)
       end
 
-      it 'should say that there was a problem' do
-        user_response = json_response
-        expect(user_response[:errors]).to include("problem")
+      it 'should return an array' do
+        expect(json_response.class).to eq(Array)
       end
 
-      it 'should respond with 422' do
-        expect(response.status).to eq(422)
+      it 'should return an empty array' do
+        expect(json_response.empty?).to eq(true)
       end
     end
   end
