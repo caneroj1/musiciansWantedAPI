@@ -7,8 +7,8 @@ FactoryGirl.define do
     age                     { rand(40) + 10 }
     gender                  { %w{male female none}.sample }
     cell                    { "" }
-    password                { "password" }
-    password_confirmation   { "password" }
+    password                { "password1" }
+    password_confirmation   { "password1" }
 
     factory :user_with_events do
       after(:create) do |user|

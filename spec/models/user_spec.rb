@@ -10,6 +10,10 @@ RSpec.describe User do
   end
 
   context 'attributes' do
+    it 'has a password digest' do
+      expect(user.password_digest).to_not be_nil
+    end
+
     it 'has a name' do
       expect(user.name).to_not be_blank
     end
@@ -143,6 +147,28 @@ RSpec.describe User do
 
       it 'must be unique' do
         expect { FactoryGirl.create(:user, cell: ENV["rspec_cell"]) }.to raise_error
+      end
+    end
+
+    context 'password validation' do
+      it 'must have matching password and password_confirmation' do
+        expect(FactoryGirl.build(:user, password: "password1", password_confirmation: "password2")).to_not be_valid
+      end
+
+      it 'must have a password that is at least 8 characters long' do
+        expect(FactoryGirl.build(:user, password: "p1", password_confirmation: "p2")).to_not be_valid
+      end
+
+      it 'must have a password that contains a number' do
+        expect(FactoryGirl.build(:user, password: "password", password_confirmation: "password")).to_not be_valid
+      end
+
+      it 'must have a password that contains letters' do
+        expect(FactoryGirl.build(:user, password: "12345678", password_confirmation: "12345678")).to_not be_valid
+      end
+
+      it 'is valid when length is at least 8 and contains both numbers and letters' do
+        expect(FactoryGirl.build(:user, password: "password1", password_confirmation: "password1"))
       end
     end
   end
