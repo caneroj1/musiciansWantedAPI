@@ -30,7 +30,7 @@ class Api::V1::UsersController < ApplicationController
 		new_user = User.new(params[:user])
 		if new_user.save
 			render json: new_user, status: 201, location: [:api, new_user]
-
+			Emails::WelcomeEmail.send(params[:user][:email])
 		else
 			render json: { errors: new_user.errors }, status: 422
 		end
@@ -67,13 +67,8 @@ class Api::V1::UsersController < ApplicationController
 	## GET
 	# gets the list of this user's events
 	def get_events
-		user = User.find_by_id(params[:id])
-
-		if !user.nil?
-			render json: user.events, status: 200, location: [:api, user]
-		else
-			render json: { errors: "there was a problem getting the events for that user" }, status: 422
-		end
+		results = Event.where("created_by = ?", params[:id])
+		render json: results, status: 200
 	end
 
 	## GET
@@ -129,5 +124,15 @@ class Api::V1::UsersController < ApplicationController
 		end
 	end
 
+	## GET
+	# returns a list of events that the specified user is attending
+	def attending
+		results = User.try(:find_by_id, params[:id]).try(:events)
 
+		if results
+			render json: results, status: 200
+		else
+			render json: { errors: "user not found" }, status: 422
+		end
+	end
 end

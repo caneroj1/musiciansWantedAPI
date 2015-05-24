@@ -37,6 +37,7 @@ RSpec.describe Api::V1::EventsController, type: :controller do
       before(:each) do
         sleep 1
         @user = FactoryGirl.create(:user)
+        @event_count = @user.events.count
         @event_attributes = FactoryGirl.attributes_for :event, created_by: @user.id
         post :create, { event: @event_attributes }, format: :json
         @event_response = json_response
@@ -56,6 +57,10 @@ RSpec.describe Api::V1::EventsController, type: :controller do
 
       it 'should add the creator to the list of attendees' do
         expect(Event.find_by_id(@event_response[:id]).users).to include(@user)
+      end
+
+      it "should show up in the creator's list of events" do
+        expect(@user.events.count).to eq(@event_count + 1)
       end
     end
 

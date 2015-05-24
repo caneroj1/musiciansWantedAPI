@@ -4,17 +4,44 @@ RSpec.describe Api::V1::SessionsController, type: :controller do
   describe 'POST#login' do
     context 'with appropriate credentials' do
       before(:each) do
-        post :login, { username: ENV["soundcloud_username"],
-                       password: ENV["soundcloud_password"] }, format: :json
+        User.create(name: "tester", email: "test_email@test.com", password: "test", password_confirmation: "test")
+        post :login, { email: "test_email@test.com",
+                       password: "test" }, format: :json
         @login_response = json_response
       end
 
-      it 'will return json for soundcloud' do
-        expect(@login_response).to have_key(:refresh_token)
+      it 'will return an id for the user' do
+        expect(@login_response).to have_key(:user_id)
       end
 
-      it 'will return the user id for the correct user' do
-        expect(@login_response).to have_key(:user_id)
+      it 'should respond with 200' do
+        expect(response.status).to eq(200)
+      end
+    end
+
+    context 'with incorrect credentials' do
+      before(:each) do
+        User.create(name: "tester", email: "test_email@test.com", password: "test", password_confirmation: "test")
+
+        post :login, { email: "test_email@test.com",
+                       password: "incorrect" }, format: :json
+        @login_response = json_response
+      end
+
+      it 'will not have an id for the user' do
+        expect(@login_response).to_not have_key(:user_id)
+      end
+
+      it 'will have an error' do
+        expect(@login_response).to have_key(:errors)
+      end
+
+      it 'should say what went wrong' do
+        expect(@login_response[:errors]).to include("username or password")
+      end
+
+      it 'should respond with 422' do
+        expect(response.status).to eq(422)
       end
     end
   end

@@ -1,13 +1,21 @@
 class User < ActiveRecord::Base
 	attr_accessible :name, :email, :age, :location, :looking_for_band,
-									:looking_to_jam, :has_profile_pic, :search_radius, :gender, :longitude, :latitude, :cell, :genre, :instrument
+									:looking_to_jam, :has_profile_pic, :search_radius, :gender,
+									:longitude, :latitude, :cell, :genre, :instrument,
+									:password, :password_confirmation
+
+	has_secure_password
 
 	validates :name, :email, presence: true
-	validates :email, format: { with: /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/i, message: %q{is not valid} },
+	validates :email, format: { with: /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/i, message: %q{is not valid.} },
 										uniqueness: true
 	validates :search_radius, numericality: { less_than_or_equal_to: 20, greater_than_or_equal_to: 5 }
 	validates :gender, inclusion: { in: ["male", "female", "none"], message: %q{needs to selected.} }
 	validates :cell, uniqueness: true, if: "!cell.blank?"
+	validates :password, :password_confirmation, 	length: { minimum: 8 }
+
+  # perform custom validation on password and password_confirmation
+	validate :validate_password_and_password_confirmation
 
 	# perform custom validation on the age
 	validate :validate_age_on_create_or_update
@@ -40,6 +48,11 @@ class User < ActiveRecord::Base
 		end
 	end
 
+	def validate_password_and_password_confirmation
+		errors.add(:password, %q{ must contain numbers and letters.}) if !password_valid?(password)
+		errors.add(:password_confirmation, %q{ must contain numbers and letters.}) if !password_valid?(password_confirmation)
+	end
+
 	# a user's cell number must be of the format 1xxxxxxxxxx or it can be blank
 	def validate_cell_on_create_or_update
 		if !/\A1[0-9]{3}[0-9]{3}[0-9]{4}\z/i.match(cell) && !cell.blank?
@@ -60,5 +73,9 @@ class User < ActiveRecord::Base
 												latitude: self.latitude,
 												longitude: self.longitude,
 												record_id: self.id)
+	end
+
+	def password_valid?(password)
+		password =~ /\d/ && password =~ /[[:alpha:]]/
 	end
 end
