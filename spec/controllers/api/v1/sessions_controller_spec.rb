@@ -4,14 +4,13 @@ RSpec.describe Api::V1::SessionsController, type: :controller do
   describe 'POST#login' do
     context 'with appropriate credentials' do
       before(:each) do
-        User.create(name: "tester", email: "test_email@test.com", password: "test", password_confirmation: "test")
+        FactoryGirl.create(:user, name: "tester", email: "test_email@test.com", password: "tester12", password_confirmation: "tester12")
         post :login, { email: "test_email@test.com",
-                       password: "test" }, format: :json
-        @login_response = json_response
+                       password: "tester12" }, format: :json
       end
 
       it 'will return an id for the user' do
-        expect(@login_response).to have_key(:user_id)
+        expect(json_response).to have_key(:user_id)
       end
 
       it 'should respond with 200' do

@@ -40,11 +40,10 @@ RSpec.describe Api::V1::EventsController, type: :controller do
         @event_count = @user.events.count
         @event_attributes = FactoryGirl.attributes_for :event, created_by: @user.id
         post :create, { event: @event_attributes }, format: :json
-        @event_response = json_response
       end
 
       it 'renders json for the record that was just created' do
-        expect(@event_response[:title]).to eq(@event_attributes[:title])
+        expect(json_response[:title]).to eq(@event_attributes[:title])
       end
 
       it 'should respond with 201 for a successful create' do
@@ -52,11 +51,11 @@ RSpec.describe Api::V1::EventsController, type: :controller do
       end
 
       it 'should create an event that belongs to the correct user' do
-        expect(@event_response[:created_by]).to eq(@user.id)
+        expect(json_response[:created_by]).to eq(@user.id)
       end
 
       it 'should add the creator to the list of attendees' do
-        expect(Event.find_by_id(@event_response[:id]).users).to include(@user)
+        expect(Event.find_by_id(json_response[:id]).users).to include(@user)
       end
 
       it "should show up in the creator's list of events" do

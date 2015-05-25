@@ -12,10 +12,10 @@ class User < ActiveRecord::Base
 	validates :search_radius, numericality: { less_than_or_equal_to: 20, greater_than_or_equal_to: 5 }
 	validates :gender, inclusion: { in: ["male", "female", "none"], message: %q{needs to selected.} }
 	validates :cell, uniqueness: true, if: "!cell.blank?"
-	validates :password, :password_confirmation, 	length: { minimum: 8 }
+	validates :password, :password_confirmation, presence: true, length: { minimum: 8 }, on: :create
 
   # perform custom validation on password and password_confirmation
-	validate :validate_password_and_password_confirmation
+	validate :validate_password_and_password_confirmation, on: :create
 
 	# perform custom validation on the age
 	validate :validate_age_on_create_or_update
