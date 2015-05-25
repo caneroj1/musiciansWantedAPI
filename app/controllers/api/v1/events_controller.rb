@@ -25,8 +25,9 @@ class Api::V1::EventsController < ApplicationController
 
   ## POST
   # @api_description
-  # creates an event according to params that are passed in
-  # adds the creator of the event to the list of attendees
+  # Creates an event according to params that are passed in
+  # and adds the creator of the event to the list of attendees automatically.
+  # Params: event_attributes(title, location, description, event_time, description, created_by)
   # @action=create
   # @end_description
   def create
@@ -45,7 +46,11 @@ class Api::V1::EventsController < ApplicationController
   end
 
   ## PUT/PATCH
-  # updates an event according to the passed in params
+  # @api_description
+  # @action=update
+  # Updates an event according to the passed in params.
+  # Params: event_attributes(title, location, description, event_time, description, created_by)
+  # @end_description
   def update
     update_event = Event.find_by_id(params[:id])
 
@@ -58,7 +63,11 @@ class Api::V1::EventsController < ApplicationController
   end
 
   ## DELETE
-  # destroys an event according to the passed in params[:id]
+  # @api_description
+  # Destroys the event specified by the id.
+  # Params: id
+  # @action=destroy
+  # @end_description
   def destroy
     delete_event = Event.find_by_id(params[:id])
 
@@ -70,7 +79,11 @@ class Api::V1::EventsController < ApplicationController
   end
 
   ## GET
-  # get the user that created the specified event
+  # @api_description
+  # @action=get_event_creator
+  # Returns json for the user that created the event specified by the id.
+  # Params: id
+  # @end_description
   def get_event_creator
     event = Event.find_by_id(params[:id])
 
@@ -82,8 +95,13 @@ class Api::V1::EventsController < ApplicationController
   end
 
   ## GET
-  # get the list of users that are attending the specified event.
-  # this includes the user who created the event.
+  # @api_description
+  # @action=get_event_attendees
+  # Gets the list of users that are attending the specified event,
+  # (This includes the user who created the event if they didn't leave), and
+  # returns json for the users.
+  # Params: id
+  # @end_description
   def get_event_attendees
     event = Event.find_by_id(params[:id])
 
@@ -95,7 +113,12 @@ class Api::V1::EventsController < ApplicationController
   end
 
   ## POST
-  # this will add the specified user to the indicated event
+  # @api_description
+  # @action=attend_event
+  # This will add the user specified by user_id to the
+  # event specified by the id's list of attendees.
+  # Params: id, user_id
+  # @end_description
   def attend_event
     event = Event.find_by_id(params[:id])
     user = User.find_by_id(params[:user_id])

@@ -1,6 +1,10 @@
 class Api::V1::MessagesController < ApplicationController
   ## GET
-  # show. returns the json for a message
+  # @api_description
+  # @action=show
+  # Returns json data for the specified message.
+  # Params: id
+  # @end_description
   def show
     message = Message.find_by_id(params[:id]) || { error: "not found" }
     status = !message.class.eql?(Hash) ? 200 : 500
@@ -8,9 +12,13 @@ class Api::V1::MessagesController < ApplicationController
   end
 
   ## POST
-  # create. this will create a new message, and add it
+  # @api_description
+  # @action=create
+  # This will create a new message, and add it
   # to the messages of the specified user, as well as
-  # mark it as being sent from the user who sent the request
+  # mark it as being sent from the user who sent the request.
+  # Params: message_attributes(subject, body, sent_by, user_id)
+  # @end_description
   def create
     # find the user we will add the message to
     user = User.find_by_id(params[:message][:user_id])
@@ -25,7 +33,11 @@ class Api::V1::MessagesController < ApplicationController
   end
 
   ## DELETE
-  # destroys the specified message
+  # @api_description
+  # @action=destroy
+  # Destroys the specified message and any replies.
+  # Params: id
+  # @end_description
   def destroy
     delete_message = Message.find_by_id(params[:id])
 
@@ -37,7 +49,11 @@ class Api::V1::MessagesController < ApplicationController
   end
 
   ## PATCH
-  # update. changes the attributes of the message
+  # @api_description
+  # @action=update
+  # This route changes the attributes of a message.
+  # Params: message_attributesmessage_attributes(subject, body, sent_by, user_id, seen_by_sender, seen_by_receiver)
+  # @end_description
   def update
     update_message = Message.find_by_id(params[:id])
 
