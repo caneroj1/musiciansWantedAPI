@@ -14,6 +14,18 @@ class Emails::WelcomeEmail
     end
 
     def send_email(email)
+      if Rails.env.eql?("development")
+        log_fake_mail(email)
+      else
+        send_real_mail(email)
+      end
+    end
+
+    def log_fake_mail
+      puts "------- IN DEVELOPMENT MODE. Sending an email to #{email}. -------"
+    end
+
+    def send_real_mail(email)
       mwEmail = "harveyh1@tcnj.edu"
 
       #Used to send email

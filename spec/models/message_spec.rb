@@ -18,6 +18,22 @@ RSpec.describe Message, type: :model do
       expect(message.body).to_not eq(nil)
     end
 
+    it 'should have a receiver saw message attribute' do
+      expect(message.seen_by_receiver).to_not be nil
+    end
+
+    it 'should have a sender saw message attribute' do
+      expect(message.seen_by_sender).to_not be nil
+    end
+
+    it 'defaults seen by sender to false' do
+      expect(message.seen_by_sender).to be false
+    end
+
+    it 'defaults seen by receiver to false' do
+      expect(message.seen_by_receiver).to be false
+    end
+
     it 'requires a subject' do
       expect(FactoryGirl.build(:message, subject: nil)).to_not be_valid
     end

@@ -1,6 +1,65 @@
 require 'rails_helper'
 
 RSpec.describe Api::V1::MessagesController, type: :controller do
+  describe 'PATCH #update' do
+    context 'valid update' do
+      before(:each) do
+        @message = FactoryGirl.create :message
+        @new_attributes = FactoryGirl.attributes_for(:message)
+        patch :update, { message: @new_attributes, id: @message.id }, format: :json
+      end
+
+      it 'should respond with 200' do
+        expect(response.status).to eq(200)
+      end
+
+      it 'should return json of the new message' do
+        expect(json_response.class).to eq(Hash)
+      end
+
+      it 'should contain the information' do
+        expect(json_response[:subject]).to eq(@new_attributes[:subject])
+      end
+    end
+
+    context 'invalid update' do
+      before(:each) do
+        @message = FactoryGirl.create :message
+        patch :update, { message: { subject: "" }, id: @message.id }, format: :json
+      end
+
+      it 'should respond with 422' do
+        expect(response.status).to eq(422)
+      end
+
+      it 'should return errors' do
+        expect(json_response).to have_key(:errors)
+      end
+
+      it 'should contain the information' do
+        expect(json_response[:errors]).to_not be nil
+      end
+    end
+
+    context 'nonexistent message' do
+      before(:each) do
+        patch :update, { id: -1 }, format: :json
+      end
+
+      it 'should respond with 422' do
+        expect(response.status).to eq(422)
+      end
+
+      it 'should return errors' do
+        expect(json_response).to have_key(:errors)
+      end
+
+      it 'should say what happened' do
+        expect(json_response[:errors]).to eq("something went wrong")
+      end
+    end
+  end
+
   describe 'GET #show' do
     context 'with an existing message' do
       before(:each) do
