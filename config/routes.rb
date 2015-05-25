@@ -28,7 +28,7 @@ Rails.application.routes.draw do
         end
       end
 
-      resources :messages, defaults: { format: :json }, except: [:index, :update, :edit, :new] do
+      resources :messages, defaults: { format: :json }, except: [:index, :edit, :new] do
         resources :replies, defaults: { format: :json }, only: [:index, :create, :destroy, :show]
       end
 

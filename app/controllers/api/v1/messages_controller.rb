@@ -35,4 +35,17 @@ class Api::V1::MessagesController < ApplicationController
       render json: { errors: "delete unsuccessful" }, status: 422
     end
   end
+
+  ## PATCH
+  # update. changes the attributes of the message
+  def update
+    update_message = Message.find_by_id(params[:id])
+
+    if update_message.try(:update, params[:message])
+      render json: update_message, status: 200, location: [:api, update_message]
+    else
+      errors = update_message.try(:errors) || "something went wrong"
+      render json: { errors: errors }, status: 422
+    end
+  end
 end
