@@ -3,7 +3,7 @@ class Api::V1::EventsController < ApplicationController
   ## GET
   # @api_description
   # @action=index
-  # returns all of the events
+  # This route returns all of the events.
   # @end_description
   def index
     respond_to do |format|
@@ -13,7 +13,8 @@ class Api::V1::EventsController < ApplicationController
 
   ## GET
   # @api_description
-  # returns json information for a specific event
+  # Returns json information for a specific event.
+  # Params: id
   # @action=show
   # @end_description
   def show

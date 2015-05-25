@@ -33,9 +33,9 @@ Rails.application.routes.draw do
       end
 
       resources :contactships, defaults: { format: :json }, only: [:create]
-      get 'contactships/contacts/:user_id',                     to: 'contactships#contacts'
-      get 'contactships/contacts/:user_id/remove/:contact_id',  to: 'contactships#destroy'
-      get 'contactships/contacts/:user_id/knows/:contact_id',   to: 'contactships#knows'
+      get     'contactships/contacts/:user_id',                     to: 'contactships#contacts'
+      delete  'contactships/contacts/:user_id/remove/:contact_id',  to: 'contactships#destroy'
+      get     'contactships/contacts/:user_id/knows/:contact_id',   to: 'contactships#knows'
 
       post  's3ProfilePictureUpload', to: 's3_storages#s3ProfilePictureUpload', defaults: { format: :json }
       post  's3EventPictureUpload',   to: 's3_storages#s3EventPictureUpload',   defaults: { format: :json }
