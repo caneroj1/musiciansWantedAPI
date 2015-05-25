@@ -1,7 +1,10 @@
 class Api::V1::EventsController < ApplicationController
 
   ## GET
+  # @api_description
+  # @action=index
   # returns all of the events
+  # @end_description
   def index
     respond_to do |format|
       format.json { render json: Event.all }
@@ -9,7 +12,10 @@ class Api::V1::EventsController < ApplicationController
   end
 
   ## GET
+  # @api_description
   # returns json information for a specific event
+  # @action=show
+  # @end_description
   def show
     respond_to do |format|
       format.json { render json: Event.find(params[:id]) }
@@ -17,8 +23,11 @@ class Api::V1::EventsController < ApplicationController
   end
 
   ## POST
+  # @api_description
   # creates an event according to params that are passed in
   # adds the creator of the event to the list of attendees
+  # @action=create
+  # @end_description
   def create
     new_event = Event.new(params[:event])
     user = User.find_by_id(new_event.created_by)
@@ -26,7 +35,7 @@ class Api::V1::EventsController < ApplicationController
     if !user.nil? && new_event.valid?
       new_event.users << user
       new_event.save
-      
+
       render json: new_event, status: 201, location: [:api, new_event]
     else
       errors = user.nil? ? "there was a problem creating this event" : new_event.errors
