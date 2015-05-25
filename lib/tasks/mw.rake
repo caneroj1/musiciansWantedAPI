@@ -1,4 +1,9 @@
 namespace :mw do
+  desc "Generates API Documentation"
+  task :document do
+    API::Routes.document('/api', File.join(Rails.root, "app/views/welcome/index.html.erb"))
+  end
+
   desc "Generates fake data to fill up our db."
   task make_data: :environment do
     puts "Populating User Table"

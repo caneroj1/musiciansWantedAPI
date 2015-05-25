@@ -7,7 +7,6 @@ class API::Routes
       descriptions = API::RouteDescription.make_route_descriptions(@route_items)
       API::RouteTable.make(@route_items, descriptions)
       API::ApiOutput.write(API::RouteTable.html, path_to_documentation_file)
-      puts ""
     end
 
     protected
