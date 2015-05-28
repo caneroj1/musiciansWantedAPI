@@ -1,6 +1,10 @@
 class Api::V1::ContactshipsController < ApplicationController
   ## GET
-  # this will return all of the contacts for the specified user.
+  # @api_description
+  # @action=contacts
+  # This will return all of the contacts for the specified user.
+  # Params: user_id
+  # @end_description
   def contacts
     user = User.find_by_id(params[:user_id])
     if !user.nil?
@@ -11,15 +15,23 @@ class Api::V1::ContactshipsController < ApplicationController
   end
 
   ## GET
-  # returns true or false depending on if the user corresponding to :user_id
-  # has a contact by the id :contact_id
+  # @api_description
+  # @action=knows
+  # Returns true or false depending on if the user corresponding to :user_id
+  # has a contact by the with id = contact_id.
+  # Params: user_id, contact_id
+  # @end_description
   def knows
     render json: { knows: User.find_by_id(params[:user_id]).try(:contactships).exists?(contact_id: params[:contact_id]) }
   end
 
   ## POST
-  # this will create the specified contactship. we add a new contactship
-  # between the user and desired contact if it doesn't already exist
+  # @api_description
+  # @action=create
+  # This will create the specified contactship. The API adds a new contactship
+  # between the user and desired contact only if it doesn't already exist.
+  # Params: user_id, contact_id
+  # @end_description
   def create
     user = User.find_by_id(params[:user_id])
     if !user.nil?
@@ -35,8 +47,12 @@ class Api::V1::ContactshipsController < ApplicationController
   end
 
   ## DELETE
-  # this will delete the specified contactship from a user. it finds the user
+  # @api_description
+  # This will delete the specified contactship from a user. It finds the user
   # by the user_id and then it finds the contact by the contact_id
+  # Params: user_id, contact_id
+  # @action=destroy
+  # @end_description
   def destroy
     user = User.find_by_id(params[:user_id])
 

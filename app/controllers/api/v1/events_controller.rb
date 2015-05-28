@@ -1,7 +1,10 @@
 class Api::V1::EventsController < ApplicationController
 
   ## GET
-  # returns all of the events
+  # @api_description
+  # @action=index
+  # This route returns all of the events.
+  # @end_description
   def index
     respond_to do |format|
       format.json { render json: Event.all }
@@ -9,7 +12,11 @@ class Api::V1::EventsController < ApplicationController
   end
 
   ## GET
-  # returns json information for a specific event
+  # @api_description
+  # Returns json information for a specific event.
+  # Params: id
+  # @action=show
+  # @end_description
   def show
     respond_to do |format|
       format.json { render json: Event.find(params[:id]) }
@@ -17,8 +24,12 @@ class Api::V1::EventsController < ApplicationController
   end
 
   ## POST
-  # creates an event according to params that are passed in
-  # adds the creator of the event to the list of attendees
+  # @api_description
+  # Creates an event according to params that are passed in
+  # and adds the creator of the event to the list of attendees automatically.
+  # Params: event_attributes(title, location, description, event_time, description, created_by)
+  # @action=create
+  # @end_description
   def create
     new_event = Event.new(params[:event])
     user = User.find_by_id(new_event.created_by)
@@ -26,7 +37,7 @@ class Api::V1::EventsController < ApplicationController
     if !user.nil? && new_event.valid?
       new_event.users << user
       new_event.save
-      
+
       render json: new_event, status: 201, location: [:api, new_event]
     else
       errors = user.nil? ? "there was a problem creating this event" : new_event.errors
@@ -35,7 +46,11 @@ class Api::V1::EventsController < ApplicationController
   end
 
   ## PUT/PATCH
-  # updates an event according to the passed in params
+  # @api_description
+  # @action=update
+  # Updates an event according to the passed in params.
+  # Params: event_attributes(title, location, description, event_time, description, created_by)
+  # @end_description
   def update
     update_event = Event.find_by_id(params[:id])
 
@@ -48,7 +63,11 @@ class Api::V1::EventsController < ApplicationController
   end
 
   ## DELETE
-  # destroys an event according to the passed in params[:id]
+  # @api_description
+  # Destroys the event specified by the id.
+  # Params: id
+  # @action=destroy
+  # @end_description
   def destroy
     delete_event = Event.find_by_id(params[:id])
 
@@ -60,7 +79,11 @@ class Api::V1::EventsController < ApplicationController
   end
 
   ## GET
-  # get the user that created the specified event
+  # @api_description
+  # @action=get_event_creator
+  # Returns json for the user that created the event specified by the id.
+  # Params: id
+  # @end_description
   def get_event_creator
     event = Event.find_by_id(params[:id])
 
@@ -72,8 +95,13 @@ class Api::V1::EventsController < ApplicationController
   end
 
   ## GET
-  # get the list of users that are attending the specified event.
-  # this includes the user who created the event.
+  # @api_description
+  # @action=get_event_attendees
+  # Gets the list of users that are attending the specified event,
+  # (This includes the user who created the event if they didn't leave), and
+  # returns json for the users.
+  # Params: id
+  # @end_description
   def get_event_attendees
     event = Event.find_by_id(params[:id])
 
@@ -85,7 +113,12 @@ class Api::V1::EventsController < ApplicationController
   end
 
   ## POST
-  # this will add the specified user to the indicated event
+  # @api_description
+  # @action=attend_event
+  # This will add the user specified by user_id to the
+  # event specified by the id's list of attendees.
+  # Params: id, user_id
+  # @end_description
   def attend_event
     event = Event.find_by_id(params[:id])
     user = User.find_by_id(params[:user_id])
