@@ -1,5 +1,5 @@
 class Notification < ActiveRecord::Base
-  attr_accessible :title, :location, :notification_type, :latitude, :longitude, :record_id
+  attr_accessible :title, :location, :notification_type, :latitude, :longitude, :record_id, :generated_by
 
   validates :title, :notification_type, presence: true
 

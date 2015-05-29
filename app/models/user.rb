@@ -72,7 +72,8 @@ class User < ActiveRecord::Base
 												location: self.location,
 												latitude: self.latitude,
 												longitude: self.longitude,
-												record_id: self.id)
+												record_id: self.id,
+												generated_by: self.id)
 	end
 
 	def password_valid?(password)

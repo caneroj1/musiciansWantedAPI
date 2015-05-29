@@ -1,6 +1,10 @@
 class Api::V1::RepliesController < ApplicationController
   ## GET
-  # returns all of the replies associated with a given message
+  # @api_description
+  # @action=index
+  # Returns json for all of the replies associated with a given message.
+  # Params: message_id
+  # @end_description
   def index
     message = Message.find_by_id(params[:message_id])
 
@@ -13,7 +17,11 @@ class Api::V1::RepliesController < ApplicationController
   end
 
   ## GET
-  # gets the info for a specific reply
+  # @api_description
+  # @action=show
+  # Returns json data for the reply specified by id under the message specified by message_id.
+  # Params: message_id, id
+  # @end_description
   def show
     message = Message.find_by_id(params[:message_id])
 
@@ -32,8 +40,11 @@ class Api::V1::RepliesController < ApplicationController
   end
 
   ## POST
-  # creates a new reply for the given message. this will basically
-  # result in the creation of message threads.
+  # @api_description
+  # Creates a new reply for the given message and returns json for the new reply.
+  # Params: message_id, body, user_id
+  # @action=create
+  # @end_description
   def create
     message = Message.find_by_id(params[:message_id])
 
@@ -52,7 +63,12 @@ class Api::V1::RepliesController < ApplicationController
   end
 
   ## DELETE
-  # this will delete a reply.
+  # @api_description
+  # @action=destroy
+  # This will delete a reply from a message's list of replies. If the operation is successful,
+  # returns a success message, otherwise returns an error message.
+  # Params: message_id, id
+  # @end_description
   def destroy
     message = Message.find_by_id(params[:message_id])
 

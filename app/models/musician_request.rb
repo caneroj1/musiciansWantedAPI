@@ -13,6 +13,7 @@ class MusicianRequest < ActiveRecord::Base
                         location: self.location,
                         latitude: self.latitude,
                         longitude: self.longitude,
-                        record_id: self.user_id)
+                        record_id: self.user_id,
+                        generated_by: self.user_id)
   end
 end

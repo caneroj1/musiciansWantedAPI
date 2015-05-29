@@ -19,6 +19,7 @@ class Event < ActiveRecord::Base
 												location: self.location,
 												latitude: self.latitude,
 												longitude: self.longitude,
-                        record_id: self.id)
+                        record_id: self.id,
+                        generated_by: self.created_by)
 	end
 end

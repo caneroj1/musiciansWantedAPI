@@ -1,9 +1,13 @@
 class Api::V1::MusicianRequestsController < ApplicationController
 
   ## POST
-  # creates a new musician request for the specified user
-  # this also creates a notification that will alert nearby users
-  # that a new musician request has been created
+  # @api_description
+  # @action=create
+  # This route creates a new musician request for the specified user.
+  # This results in the creation of a notification that will alert nearby users that
+  # a new musician request has been created.
+  # Params: user_id, instrument
+  # @end_description
   def create
     user = User.find_by_id(params[:user_id])
     request = user.musician_requests.new( poster: user.name,
