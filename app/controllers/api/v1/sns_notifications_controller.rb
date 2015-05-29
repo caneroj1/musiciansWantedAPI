@@ -4,7 +4,9 @@ class Api::V1::SnsNotificationsController < ApplicationController
 
   # Load AWS SES Client
   def loadSNSClient
-    @snsClient = Aws::SNS::Client.new(access_key_id: ENV['h_aws_access_key_id'], secret_access_key: ENV['h_aws_secret_access_key'], region: 'us-east-1')
+    @snsClient = Aws::SNS::Client.new(access_key_id: ENV['h_aws_access_key_id'],
+                                      secret_access_key: ENV['h_aws_secret_access_key'],
+                                      region: 'us-east-1')
   end
 
   def checkBounce
@@ -12,10 +14,15 @@ class Api::V1::SnsNotificationsController < ApplicationController
   end
 
   ## POST
-  # subscribes the cell number to our AWS SNS notifications topic.
-  # performs validation to see if it is in this format: 1-xxx-xxx-xxxx.
-  # also, the cell must be unique, and if the subscriber cannot update their cell number, then we return with an error.
-  # this route should ONLY be used when the user is creating their first subscription.
+  # @api_description
+  # @action=subscribe
+  # Subscribes the parameter's cell number to our AWS SNS notifications topic.
+  # The route also performs validation to see if it is in this format: 1-xxx-xxx-xxxx.
+  # The cell number must be unique, and if the subscriber is unable to update their cell number because of this,
+  # then we return with an error.
+  # This route should ONLY be used when the user is creating their first subscription.
+  # Params: id, cell
+  # @end_description
   def subscribe
     if /1-[0-9]{3}-[0-9]{3}-[0-9]{4}/.match(params[:cell])
       subscriber = User.find_by_id(params[:id])
@@ -43,9 +50,13 @@ class Api::V1::SnsNotificationsController < ApplicationController
   end
 
   ## POST
-  # this will change a user's subscription. it has to find the user's subscription in the list of subs
-  # maintained by amazon. it searches by the cell number. once it finds the subscription, it deletes it
-  # and then resubscribes the user with a different cell number
+  # @api_description
+  # @action=resubscribe
+  # This route will change a user's subscription. It has to find the user's subscription in the list of subs
+  # maintained by Amazon. It searches by the cell number for a subscriotion, and once it finds the subscription, it is deleted
+  # and then the user is resubscribed with the different cell number.
+  # Params: id, cell
+  # @end_description
   def resubscribe
     if /1-[0-9]{3}-[0-9]{3}-[0-9]{4}/.match(params[:cell])
       subscriber = User.find_by_id(params[:id])
@@ -94,7 +105,12 @@ class Api::V1::SnsNotificationsController < ApplicationController
   end
 
   ## POST
-  # publishes a notification to the subscribers of the AWS topic
+  # @api_description
+  # @action=publish
+  # This route publishes a notification to the subscribers of the AWS topic. If the action is successful,
+  # we return a success message, otherwise we rescue any exceptions and return that as the error message.
+  # Params: message, subject
+  # @end_description
   def publish
     begin
       @snsClient.publish({

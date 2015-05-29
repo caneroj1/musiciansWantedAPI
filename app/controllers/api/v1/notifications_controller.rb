@@ -1,10 +1,14 @@
 class Api::V1::NotificationsController < ApplicationController
   ## GET
-  # this gets all of the notifications given a certain user id.
-  # if there are no filters, we simply get the most recent 30 notifications.
-  # if there is a location, we get the most recent 30 locations near the user according
+  # @api_description
+  # @action=notifications
+  # Returns all of the notifications given a certain user id.
+  # Up to 30 notifications are returned with any one query, and they are sorted in
+  # descending order according to the most recent ones.
+  # If the user has specified their location, returns the most recent 30 locations near the user according
   # to their search radius.
-  # other search filters will be incorporated as needed.
+  # Params: id
+  # @end_description
   def notifications
     user = User.find_by_id(params[:id])
 

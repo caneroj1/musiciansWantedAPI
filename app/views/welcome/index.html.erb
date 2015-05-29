@@ -18,7 +18,56 @@
       	<th class="heading">Description</th>
       </tr>
       <!--@api_documentation-->
-<tr><td>sessions</td><td>json</td><td>POST</td><td>/api/login(.:format)</td><td>No route description.</td></tr><tr><td>notifications</td><td>json</td><td>GET</td><td>/api/notifications(.:format)</td><td>No route description.</td></tr><tr><td>musician_requests</td><td>json</td><td>POST</td><td>/api/users/:user_id/musician_requests(.:format)</td><td>No route description.</td></tr><tr><td>users</td><td>json</td><td>GET</td><td>/api/users/:id/events(.:format)</td><td>No route description.</td></tr><tr><td>users</td><td>json</td><td>GET</td><td>/api/users/:id/messages(.:format)</td><td>No route description.</td></tr><tr><td>users</td><td>json</td><td>GET</td><td>/api/users/:id/sent_messages(.:format)</td><td>No route description.</td></tr><tr><td>users</td><td>json</td><td>GET</td><td>/api/users/:id/near_me(.:format)</td><td>No route description.</td></tr><tr><td>users</td><td>json</td><td>GET</td><td>/api/users/:id/events_near_me(.:format)</td><td>No route description.</td></tr><tr><td>users</td><td>json</td><td>GET</td><td>/api/users/:id/attending(.:format)</td><td>No route description.</td></tr><tr><td>users</td><td>json</td><td>GET</td><td>/api/users(.:format)</td><td>No route description.</td></tr><tr><td>users</td><td>json</td><td>POST</td><td>/api/users(.:format)</td><td>No route description.</td></tr><tr><td>users</td><td>json</td><td>GET</td><td>/api/users/:id(.:format)</td><td>No route description.</td></tr><tr><td>users</td><td>json</td><td>PATCH</td><td>/api/users/:id(.:format)</td><td>No route description.</td></tr><tr><td>users</td><td>json</td><td>PUT</td><td>/api/users/:id(.:format)</td><td>No route description.</td></tr><tr><td>users</td><td>json</td><td>DELETE</td><td>/api/users/:id(.:format)</td><td>No route description.</td></tr><tr><td>events</td><td>json</td><td>GET</td><td>/api/events/:id/creator(.:format)</td><td>Returns json for the user that created the event specified by the id.
+<tr><td>sessions</td><td>json</td><td>POST</td><td>/api/login(.:format)</td><td>This route will try to authenticate a user via email and password. If authentication is successful, the response
+will be the id of the user. If authentication is unsuccessful, response will be an error message.
+Params: email, password
+</td></tr><tr><td>notifications</td><td>json</td><td>GET</td><td>/api/notifications(.:format)</td><td>Returns all of the notifications given a certain user id.
+Up to 30 notifications are returned with any one query, and they are sorted in
+descending order according to the most recent ones.
+If the user has specified their location, returns the most recent 30 locations near the user according
+to their search radius.
+Params: id
+</td></tr><tr><td>musician_requests</td><td>json</td><td>POST</td><td>/api/users/:user_id/musician_requests(.:format)</td><td>This route creates a new musician request for the specified user.
+This results in the creation of a notification that will alert nearby users that
+a new musician request has been created.
+Params: user_id, instrument
+</td></tr><tr><td>users</td><td>json</td><td>GET</td><td>/api/users/:id/events(.:format)</td><td>This route returns all of the events created by the specified user in json format.
+Params: id
+</td></tr><tr><td>users</td><td>json</td><td>GET</td><td>/api/users/:id/messages(.:format)</td><td>This route returns json data for all of the received messages sent to the specified user.
+Params: id
+</td></tr><tr><td>users</td><td>json</td><td>GET</td><td>/api/users/:id/sent_messages(.:format)</td><td>This route returns json data for all of the messages that the specified user has sent.
+Params: id
+</td></tr><tr><td>users</td><td>json</td><td>GET</td><td>/api/users/:id/near_me(.:format)</td><td>This route does a search with the geocoder and finds all users that are close to the specified
+user. Closeness is defined in terms of the specified user's search radius.
+Params: id
+</td></tr><tr><td>users</td><td>json</td><td>GET</td><td>/api/users/:id/events_near_me(.:format)</td><td>This route does a search with the geocoder and finds all the events close to the specified
+user. Closeness is defined in terms of the specified user's search radius.
+Params: id
+</td></tr><tr><td>users</td><td>json</td><td>GET</td><td>/api/users/:id/attending(.:format)</td><td>This route returns a list of events that the specified user is attending.
+Params: id
+</td></tr><tr><td>users</td><td>json</td><td>GET</td><td>/api/users(.:format)</td><td>This route returns all users in json format.
+</td></tr><tr><td>users</td><td>json</td><td>POST</td><td>/api/users(.:format)</td><td>This route accepts a hash of user attributes in order to create and save a new user.
+If the action is successful, then we return the new user in json format.
+If the action is unsuccessful, we return the errors.
+Params: user_attributes(name, email, age, location, looking_for_band, looking_to_jam, search_radius,
+gender)
+</td></tr><tr><td>users</td><td>json</td><td>GET</td><td>/api/users/:id(.:format)</td><td>This route will return data for an individual user in json format. The user is specified by the id
+parameter in the route.
+Params: id
+</td></tr><tr><td>users</td><td>json</td><td>PATCH</td><td>/api/users/:id(.:format)</td><td>This route accepts a hash of user attributes that will be used to update the user's information.
+If the action is successful, then we return the updated user in json format.
+If the action is unsuccessful, we return the errors.
+Params: user_attributes(name, email, age, location, looking_for_band, looking_to_jam, search_radius,
+gender, location)
+</td></tr><tr><td>users</td><td>json</td><td>PUT</td><td>/api/users/:id(.:format)</td><td>This route accepts a hash of user attributes that will be used to update the user's information.
+If the action is successful, then we return the updated user in json format.
+If the action is unsuccessful, we return the errors.
+Params: user_attributes(name, email, age, location, looking_for_band, looking_to_jam, search_radius,
+gender, location)
+</td></tr><tr><td>users</td><td>json</td><td>DELETE</td><td>/api/users/:id(.:format)</td><td>This route destroys the specified user according to the id passed in the params.
+If it is successful, it returns a success message, otherwise it returns and error messasge.
+Params: id
+</td></tr><tr><td>events</td><td>json</td><td>GET</td><td>/api/events/:id/creator(.:format)</td><td>Returns json for the user that created the event specified by the id.
 Params: id
 </td></tr><tr><td>events</td><td>json</td><td>GET</td><td>/api/events/:id/attendees(.:format)</td><td>Gets the list of users that are attending the specified event,
 (This includes the user who created the event if they didn't leave), and
@@ -39,7 +88,16 @@ Params: event_attributes(title, location, description, event_time, description, 
 Params: event_attributes(title, location, description, event_time, description, created_by)
 </td></tr><tr><td>events</td><td>json</td><td>DELETE</td><td>/api/events/:id(.:format)</td><td>Destroys the event specified by the id.
 Params: id
-</td></tr><tr><td>replies</td><td>json</td><td>GET</td><td>/api/messages/:message_id/replies(.:format)</td><td>No route description.</td></tr><tr><td>replies</td><td>json</td><td>POST</td><td>/api/messages/:message_id/replies(.:format)</td><td>No route description.</td></tr><tr><td>replies</td><td>json</td><td>GET</td><td>/api/messages/:message_id/replies/:id(.:format)</td><td>No route description.</td></tr><tr><td>replies</td><td>json</td><td>DELETE</td><td>/api/messages/:message_id/replies/:id(.:format)</td><td>No route description.</td></tr><tr><td>messages</td><td>json</td><td>POST</td><td>/api/messages(.:format)</td><td>This will create a new message, and add it
+</td></tr><tr><td>replies</td><td>json</td><td>GET</td><td>/api/messages/:message_id/replies(.:format)</td><td>Returns json for all of the replies associated with a given message.
+Params: message_id
+</td></tr><tr><td>replies</td><td>json</td><td>POST</td><td>/api/messages/:message_id/replies(.:format)</td><td>Creates a new reply for the given message and returns json for the new reply.
+Params: message_id, body, user_id
+</td></tr><tr><td>replies</td><td>json</td><td>GET</td><td>/api/messages/:message_id/replies/:id(.:format)</td><td>Returns json data for the reply specified by id under the message specified by message_id.
+Params: message_id, id
+</td></tr><tr><td>replies</td><td>json</td><td>DELETE</td><td>/api/messages/:message_id/replies/:id(.:format)</td><td>This will delete a reply from a message's list of replies. If the operation is successful,
+returns a success message, otherwise returns an error message.
+Params: message_id, id
+</td></tr><tr><td>messages</td><td>json</td><td>POST</td><td>/api/messages(.:format)</td><td>This will create a new message, and add it
 to the messages of the specified user, as well as
 mark it as being sent from the user who sent the request.
 Params: message_attributes(subject, body, sent_by, user_id)
@@ -62,7 +120,32 @@ Params: user_id, contact_id
 </td></tr><tr><td>contactships</td><td>json</td><td>GET</td><td>/api/contactships/contacts/:user_id/knows/:contact_id(.:format)</td><td>Returns true or false depending on if the user corresponding to :user_id
 has a contact by the with id = contact_id.
 Params: user_id, contact_id
-</td></tr><tr><td>s3_storages</td><td>json</td><td>POST</td><td>/api/s3ProfilePictureUpload(.:format)</td><td>No route description.</td></tr><tr><td>s3_storages</td><td>json</td><td>POST</td><td>/api/s3EventPictureUpload(.:format)</td><td>No route description.</td></tr><tr><td>s3_storages</td><td>json</td><td>GET</td><td>/api/s3ProfileGet(.:format)</td><td>No route description.</td></tr><tr><td>s3_storages</td><td>json</td><td>GET</td><td>/api/s3EventGet(.:format)</td><td>No route description.</td></tr><tr><td>sns_notifications</td><td>json</td><td>POST</td><td>/api/subscribe(.:format)</td><td>No route description.</td></tr><tr><td>sns_notifications</td><td>json</td><td>POST</td><td>/api/publish(.:format)</td><td>No route description.</td></tr><tr><td>sns_notifications</td><td>json</td><td>POST</td><td>/api/resubscribe(.:format)</td><td>No route description.</td></tr>
+</td></tr><tr><td>s3_storages</td><td>json</td><td>POST</td><td>/api/s3ProfilePictureUpload(.:format)</td><td>This route accepts Base64 encoded image data and uploads our s3 storage bucket. This stores the associated image
+with a user.
+Params: image, user_id
+</td></tr><tr><td>s3_storages</td><td>json</td><td>POST</td><td>/api/s3EventPictureUpload(.:format)</td><td>This route accepts Base64 encoded image data and uploads our s3 storage bucket. This stores the associated image
+with an event.
+Params: image, event_id
+</td></tr><tr><td>s3_storages</td><td>json</td><td>GET</td><td>/api/s3ProfileGet(.:format)</td><td>This route accepts a user id and returns the profile image associated with that user. The image returned
+will either be a Base64 encoded image or it will be nil, if the user has not uploaded an image.
+Params: user_id
+</td></tr><tr><td>s3_storages</td><td>json</td><td>GET</td><td>/api/s3EventGet(.:format)</td><td>This route accepts an event id and returns the event image associated with that event. The image returned
+will either be a Base64 encoded image or it will be nil, if the event has no uploaded image.
+Params: event_id
+</td></tr><tr><td>sns_notifications</td><td>json</td><td>POST</td><td>/api/subscribe(.:format)</td><td>Subscribes the parameter's cell number to our AWS SNS notifications topic.
+The route also performs validation to see if it is in this format: 1-xxx-xxx-xxxx.
+The cell number must be unique, and if the subscriber is unable to update their cell number because of this,
+then we return with an error.
+This route should ONLY be used when the user is creating their first subscription.
+Params: id, cell
+</td></tr><tr><td>sns_notifications</td><td>json</td><td>POST</td><td>/api/publish(.:format)</td><td>This route publishes a notification to the subscribers of the AWS topic. If the action is successful,
+we return a success message, otherwise we rescue any exceptions and return that as the error message.
+Params: message, subject
+</td></tr><tr><td>sns_notifications</td><td>json</td><td>POST</td><td>/api/resubscribe(.:format)</td><td>This route will change a user's subscription. It has to find the user's subscription in the list of subs
+maintained by Amazon. It searches by the cell number for a subscriotion, and once it finds the subscription, it is deleted
+and then the user is resubscribed with the different cell number.
+Params: id, cell
+</td></tr>
 <!--@end_documentation-->
       </table>
     </div>
