@@ -7,7 +7,7 @@
 # role :app, %w{45.56.101.202}
 # role :web, %w{root@45.56.101.202}
 
-role :web, %w{root@54.86.145.140}
+role :web, %w{root@52.7.212.226}
 # role :db,  %w{45.56.101.202}
 
 
