@@ -28,3 +28,4 @@ production:
   password: <%= ENV["rds_password"] %>
   host:     <%= ENV["rds_hostname"] %>
   database: mwdb
+  port: 5432

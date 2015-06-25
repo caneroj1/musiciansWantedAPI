@@ -5,7 +5,9 @@
 # property set.  Don't declare `role :all`, it's a meta role.
 
 # role :app, %w{45.56.101.202}
-role :web, %w{root@45.56.101.202}
+# role :web, %w{root@45.56.101.202}
+
+role :web, %w{root@52.7.212.226}
 # role :db,  %w{45.56.101.202}
 
 
